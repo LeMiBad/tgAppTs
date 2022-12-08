@@ -28,11 +28,8 @@ declare global {
 
 
 const Header = () => {
-
-    console.log(window.Telegram.WebApp.colorScheme)
-
     return <>
-        {/* <h1>{tg}</h1> */}
+        <h1>{window.Telegram.WebApp.colorScheme}</h1>
         <StyledHeader>
             <CategoryList/>
             <StyledHeaderSection>
