@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/tgAppTs/static/js/main.9b3e8dc4.js",
+    "main.js": "/tgAppTs/static/js/main.8c9ec80b.js",
     "index.html": "/tgAppTs/index.html",
-    "main.9b3e8dc4.js.map": "/tgAppTs/static/js/main.9b3e8dc4.js.map"
+    "main.8c9ec80b.js.map": "/tgAppTs/static/js/main.8c9ec80b.js.map"
   },
   "entrypoints": [
-    "static/js/main.9b3e8dc4.js"
+    "static/js/main.8c9ec80b.js"
   ]
 }
