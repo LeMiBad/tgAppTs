@@ -1,7 +1,15 @@
-import styled from "styled-components"
+import { useStore } from "effector-react"
+import styled, { createGlobalStyle } from "styled-components"
 import BasketIcon from "../../icons/BasketIcon"
+import { $tgInfo } from "../../store/tgData"
 import CategoryList from "../CategoryList/CategoryList"
 
+
+const StyledBody = createGlobalStyle<{dark: boolean}>`
+    body {
+        background-color: ${props => props.dark? 'black' : "white"};
+    }
+`
 
 const StyledHeader = styled.div`
     width: 90%;
@@ -15,21 +23,14 @@ const StyledHeader = styled.div`
 
 const StyledHeaderSection = styled.div`
     display: flex;
-    gap: 10px;
+    min-width: 30px;
 `
 
-declare global {
-    interface Window {
-        Telegram: {
-            WebApp: any
-        };
-    }
-}
-
-
 const Header = () => {
+    const {dark} = useStore($tgInfo)
+
     return <>
-        <h1>{window.Telegram.WebApp.colorScheme}</h1>
+        <StyledBody dark={dark}></StyledBody>
         <StyledHeader>
             <CategoryList/>
             <StyledHeaderSection>

@@ -1,13 +1,16 @@
+import { useStore } from "effector-react"
 import styled from "styled-components"
 import { setCategory } from "../../store/pickedCategory"
+import { $tgInfo } from "../../store/tgData"
 
 
 
-const StyledCategoryList = styled.div`
+const StyledCategoryList = styled.div<{desktop: boolean, dark: boolean}>`
     display: flex;
     gap: 10px;
     padding: 15px 0 15px 0;
-    overflow-x: scroll;
+    overflow-x: ${props => !props.desktop? 'scroll' : "hidden"};
+    color: ${props => props.dark? 'white' : 'black'};
     @media (max-width: 768px) {
         
     }
@@ -26,11 +29,12 @@ const StyledCategoryListItem = styled.div`
 
 
 const CategoryList = () => {
+    const {dark, desktop} = useStore($tgInfo)
 
     const categoryList = ['Шарфы', 'Часы', 'Джинсы', 'Куртки', 'Обувь', 'Колготки', 'Кросовки', 'Шарфы', 'Часы', 'Джинсы', 'Куртки', 'Обувь', 'Колготки', 'Кросовки', 'Шарфы', 'Часы', 'Джинсы', 'Куртки', 'Обувь', 'Колготки', 'Кросовки']
 
     return (
-        <StyledCategoryList>
+        <StyledCategoryList dark={dark} desktop={desktop}>
             {categoryList.map((category, i) => <StyledCategoryListItem key={category + i} onClick={() => setCategory(category)}>{category}</StyledCategoryListItem>)}
         </StyledCategoryList>
     )

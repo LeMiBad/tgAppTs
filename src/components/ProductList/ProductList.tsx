@@ -1,6 +1,7 @@
 import { useStore } from "effector-react"
 import styled from "styled-components"
 import { $category } from "../../store/pickedCategory"
+import { $tgInfo } from "../../store/tgData"
 
 
 const StyledProductList = styled.div`
@@ -9,7 +10,6 @@ const StyledProductList = styled.div`
     margin: 0 auto;
     flex-direction: column;
     gap: 10px;
-    background-color: white;
 `
 
 const StyledProductRow = styled.div`
@@ -59,6 +59,7 @@ const StyledNameWrapper = styled.div`
 
 const ProductList = () => {
     const curItem = useStore($category)
+    const {dark} = useStore($tgInfo)
 
     return (
         <StyledProductList>
@@ -66,7 +67,7 @@ const ProductList = () => {
                 <StyledProductItem>
                     <StyledProductImg/>
                     <StyledNameWrapper>
-                        <h3>{curItem}gregregergregregergregregergregreger</h3>
+                        <h3>{curItem}</h3>
                         <button>В корзину</button>
                     </StyledNameWrapper>
                 </StyledProductItem>
