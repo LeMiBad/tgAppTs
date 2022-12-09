@@ -1,7 +1,5 @@
-import { useStore } from "effector-react"
 import styled from "styled-components"
-import { $category } from "../../store/pickedCategory"
-import { $tgInfo } from "../../store/tgData"
+import { addBasketItem } from "../../store/basket"
 
 
 const StyledProductList = styled.div`
@@ -22,7 +20,10 @@ const StyledProductItem = styled.div`
     display: flex;
     width: 43vw;
     flex-direction: column;
-`
+    box-shadow: 8px 8px 11px #00000040;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    `
 const StyledProductImg = styled.div`
     height: 43vw;
     background-size: contain !important;
@@ -57,76 +58,73 @@ const StyledNameWrapper = styled.div`
     }
 `
 
-const ProductList = () => {
-    const curItem = useStore($category)
-    const {dark} = useStore($tgInfo)
+const testProducts = [
+    [{
+        id: 0,
+        name: 'Обувь',
+        desk: 'Предназначена для ношения',
+        price: '2500'
+    },
+    {
+        id: 1,
+        name: 'Скрепка',
+        desk: 'Для крепежей',
+        price: '15'
+    },],
+    [{
+        id: 2,
+        name: 'Кастрюля',
+        desk: 'С антипригарочным покрытием',
+        price: '1200'
+    },
+    {
+        id: 3,
+        name: 'Кольцо',
+        desk: 'Для предстоящего бракосочетания',
+        price: '12500'
+    },],
+    [{
+        id: 4,
+        name: 'Кастрюля',
+        desk: 'С антипригарочным покрытием',
+        price: '1200'
+    },
+    {
+        id: 5,
+        name: 'Кольцо',
+        desk: 'Для предстоящего бракосочетания',
+        price: '12500'
+    },],
+    [{
+        id: 6,
+        name: 'Кастрюля',
+        desk: 'С антипригарочным покрытием',
+        price: '1200'
+    },
+    {
+        id: 7,
+        name: 'Кольцо',
+        desk: 'Для предстоящего бракосочетания',
+        price: '12500'
+    },],
+]
 
+const ProductList = () => {
     return (
         <StyledProductList>
-            <StyledProductRow>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-            </StyledProductRow>
-            <StyledProductRow>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-            </StyledProductRow>
-            <StyledProductRow>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-            </StyledProductRow>
-            <StyledProductRow>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-                <StyledProductItem>
-                    <StyledProductImg/>
-                    <StyledNameWrapper>
-                        <h3>{curItem}</h3>
-                        <button>В корзину</button>
-                    </StyledNameWrapper>
-                </StyledProductItem>
-            </StyledProductRow>
+            {testProducts.map(row => {
+                    return <StyledProductRow key={row[0].id}>
+                        {row.map(product => {
+                            return <StyledProductItem key={product.id}>
+                                <StyledProductImg/>
+                                <StyledNameWrapper>
+                                    <h3>{product.name}</h3>
+                                    <button onClick={() => addBasketItem(product)}>В корзину</button>
+                                </StyledNameWrapper>
+                            </StyledProductItem>
+                        })}
+                    </StyledProductRow>
+                })}
         </StyledProductList>
     )
 }

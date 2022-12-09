@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
         padding: 0;
         font-family: 'Roboto';
         body {
+            /* overflow: hidden; */
             background-color: ${props => props.dark? 'black' : "white"};
         }
     }
@@ -29,6 +30,7 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
 const StyledCategoryName = styled.h1<{dark: boolean}>`
     color: ${props => props.dark? "white" : "black"};
     padding-left: 5%;
+    margin-top: 7vh;
     font-size: 22px;
 `
 

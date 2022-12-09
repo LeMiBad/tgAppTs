@@ -1,7 +1,7 @@
 import { useStore } from "effector-react"
 import styled, { createGlobalStyle } from "styled-components"
-import BasketIcon from "../../icons/BasketIcon"
 import { $tgInfo } from "../../store/tgData"
+import Basket from "../Basket/Basket"
 import CategoryList from "../CategoryList/CategoryList"
 
 
@@ -11,14 +11,19 @@ const StyledBody = createGlobalStyle<{dark: boolean}>`
     }
 `
 
-const StyledHeader = styled.div`
-    width: 90%;
+const StyledHeader = styled.div<{dark: boolean}>`
+    width: 100%;
     margin: 0 auto;
+    position: fixed;
+    top: 0;
     gap: 10px;
+    padding: 0 5%;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 14px;
+    background-color: ${props => props.dark? 'black' : "white"};
 `
 
 const StyledHeaderSection = styled.div`
@@ -31,10 +36,10 @@ const Header = () => {
 
     return <>
         <StyledBody dark={dark}></StyledBody>
-        <StyledHeader>
+        <StyledHeader dark={dark}>
             <CategoryList/>
             <StyledHeaderSection>
-                <BasketIcon value={3}/>
+                <Basket/>
             </StyledHeaderSection>
         </StyledHeader>
     </>
