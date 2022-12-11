@@ -23,13 +23,13 @@ const StyledCategoryList = styled.div<{desktop: boolean, dark: boolean, ref?: an
     }
 `
 
-const StyledCategoryListItem = styled.div<{active?: boolean}>`
+const StyledCategoryListItem = styled.div<{active?: boolean, dark: boolean}>`
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: ${props => props.active? '16px' : '16px'};
     font-weight: ${props => props.active? '600' : '400'};
-    color: ${props => props.active? 'black' : '#a09a9a'};
+    color: ${props => props.active? props.dark? 'white' : 'black' : '#a09a9a'};
     height: 100%;
     cursor: pointer;
 `
@@ -60,8 +60,8 @@ const CategoryList = () => {
         <>
             <StyledCategoryList dark={dark} desktop={desktop}>
                 {categoryList.map((category, i) => {
-                    if(category === activeCategory) return <StyledCategoryListItem active={true} key={category + i} onClick={(e) => pickCategory(e, category)}>{category}</StyledCategoryListItem>
-                    return <StyledCategoryListItem key={category + i} onClick={(e) => pickCategory(e, category)}>{category}</StyledCategoryListItem>
+                    if(category === activeCategory) return <StyledCategoryListItem dark={dark} active={true} key={category + i} onClick={(e) => pickCategory(e, category)}>{category}</StyledCategoryListItem>
+                    return <StyledCategoryListItem dark={dark} key={category + i} onClick={(e) => pickCategory(e, category)}>{category}</StyledCategoryListItem>
                 })}
             </StyledCategoryList>
         </>

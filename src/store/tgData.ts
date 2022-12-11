@@ -4,18 +4,18 @@ import { createEvent, createStore } from "effector";
 
 
 const initialTgInfo = {
-    dark: false,
-    desktop: true
+    dark: true,
+    desktop: false
 }
 
 
 
 export const darkThemeEnabler = createEvent()
-export const desktopDisabler = createEvent()
+export const desktopEnabler = createEvent()
 export const $tgInfo = createStore(initialTgInfo)
     .on(darkThemeEnabler, state => {
         return {...state, dark: true}
     })
-    .on(desktopDisabler, state => {
-        return {...state, desktop: false}
+    .on(desktopEnabler, state => {
+        return {...state, desktop: true}
     })

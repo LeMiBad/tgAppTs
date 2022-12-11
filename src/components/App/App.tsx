@@ -1,8 +1,7 @@
 import { useStore } from 'effector-react'
 import { useEffect } from 'react'
 import { createGlobalStyle } from 'styled-components'
-import { $category } from '../../store/pickedCategory'
-import { $tgInfo, darkThemeEnabler, desktopDisabler } from '../../store/tgData'
+import { $tgInfo, darkThemeEnabler, desktopEnabler } from '../../store/tgData'
 import Header from '../Header/Header'
 import ProductList from '../ProductList/ProductList'
 import './../../font/Roboto.css'
@@ -34,7 +33,7 @@ const App = () => {
     }, [])
 
     useEffect(() => {
-        if(window.Telegram.WebApp.platform !== 'tdesktop') desktopDisabler()
+        if(window.Telegram.WebApp.platform === 'tdesktop') desktopEnabler()
     }, [])
 
 
