@@ -5,7 +5,7 @@ import { addBasketItem } from "../../store/basket"
 const StyledProductList = styled.div`
     display: flex;
     width: 90%;
-    margin: 0 auto;
+    margin: 55px auto 0 auto;
     flex-direction: column;
     gap: 10px;
 `
@@ -23,7 +23,8 @@ const StyledProductItem = styled.div`
     box-shadow: 8px 8px 11px #00000040;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    `
+`
+
 const StyledProductImg = styled.div`
     height: 43vw;
     background-size: contain !important;
@@ -31,14 +32,13 @@ const StyledProductImg = styled.div`
 `
 
 const StyledNameWrapper = styled.div`
+    position: relative;
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border-right: 1px solid #67cbf3;
-    border-left: 1px solid #67cbf3;
-    background-color: #67cbf3;
+    background-color: #00000040;
+    padding: 30px 10px 15px 10px;
     color: white;
     h3 {
         font-size: 16px;
@@ -47,14 +47,21 @@ const StyledNameWrapper = styled.div`
         max-width: 100%;
     }
     button {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
+        position: absolute;
+        z-index: 1;
+        right: 5%;
+        top: -15px;
+        font-size: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
         padding: 4px 6px;
-        background-color: #67cbf3;
+        background-color: rgb(242,18,71);
         color: white;
         border: 0;
-        max-width: 100%;
-        width: 100%;
     }
 `
 
@@ -119,7 +126,8 @@ const ProductList = () => {
                                 <StyledProductImg/>
                                 <StyledNameWrapper>
                                     <h3>{product.name}</h3>
-                                    <button onClick={() => addBasketItem(product)}>В корзину</button>
+                                    <h3>{product.price}Р</h3>
+                                    <button onClick={() => addBasketItem(product)}>+</button>
                                 </StyledNameWrapper>
                             </StyledProductItem>
                         })}

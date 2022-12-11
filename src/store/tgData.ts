@@ -19,5 +19,3 @@ export const $tgInfo = createStore(initialTgInfo)
     .on(desktopDisabler, state => {
         return {...state, desktop: false}
     })
-
-

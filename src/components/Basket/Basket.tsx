@@ -84,13 +84,12 @@ const Basket = () => {
         }
     }
 
-    console.log(basket)
 
     return <>
         {(openState)? <>
             <StyledBasketWrapper dark={dark} anim={curAnim}>
                 <h1 style={{color: dark? 'white' : 'black', margin: '0px 10px 20px 0px'}}>Ваша корзина</h1>
-                <div style={{overflowY: 'scroll', height: '100vh'}}>
+                <div style={{overflowY: 'scroll', height: '90vh'}}>
                     {basket.map(product => {
                         return <StyledBasketItem key={product.id}>
                             <StyledBasketImg/>

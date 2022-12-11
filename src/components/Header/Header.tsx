@@ -15,6 +15,7 @@ const StyledHeader = styled.div<{dark: boolean}>`
     width: 100%;
     margin: 0 auto;
     position: fixed;
+    z-index: 10;
     top: 0;
     gap: 10px;
     padding: 0 5%;
