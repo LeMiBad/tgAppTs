@@ -1,5 +1,5 @@
 import { useStore } from "effector-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled, { keyframes } from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import BasketIcon from "../../icons/BasketIcon"
@@ -85,6 +85,25 @@ const Basket = () => {
             switchHandler()
         }
     }
+
+    const getSumOfValue = () => {
+        let counter = 0
+        basket.forEach(prod => {counter += +prod.price})
+        return counter
+    }
+
+
+    useEffect(() => {
+        if(basket.length) {
+            window.Telegram.WebApp.MainButton.show()
+            window.Telegram.WebApp.MainButton.setParams({
+                text: `Оформить заказ на ${getSumOfValue()})}`
+            })
+        }
+        else {
+            window.Telegram.WebApp.MainButton.hide()
+        }
+    })
 
 
     return <>
