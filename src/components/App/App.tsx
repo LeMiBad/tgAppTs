@@ -30,6 +30,10 @@ const App = () => {
     const {dark} = useStore($tgInfo)
 
     useEffect(() => {
+        window.Telegram.WebApp.MainButton.show()
+    })
+
+    useEffect(() => {
         if(window.Telegram.WebApp.colorScheme === 'dark') darkThemeEnabler()
     }, [])
 
@@ -43,6 +47,7 @@ const App = () => {
             <GlobalStyle dark={dark}/>
             <SalePointPicker/>
             <Header/>
+            FG
             <ProductList/>
         </>
     )
