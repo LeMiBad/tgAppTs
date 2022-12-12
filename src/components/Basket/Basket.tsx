@@ -97,7 +97,7 @@ const Basket = () => {
         if(basket.length) {
             window.Telegram.WebApp.MainButton.show()
             window.Telegram.WebApp.MainButton.setParams({
-                text: `Оформить заказ на ${getSumOfValue()})}`
+                text: `Оформить заказ на ${getSumOfValue()}`
             })
         }
         else {
