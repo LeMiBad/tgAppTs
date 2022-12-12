@@ -97,7 +97,7 @@ const Basket = () => {
             window.Telegram.WebApp.MainButton.show()
             window.Telegram.WebApp.MainButton.setParams({
                 text: `Оформить заказ на ${getSumOfValue()}`,
-                color: dark? '#ffffff' : '#000000',
+                color: dark? '#000000' : '#ffffff',
                 textColor: dark? '#000000' : '#ffffff'
             })
         }
