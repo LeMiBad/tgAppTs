@@ -28,7 +28,6 @@ const exit = keyframes`
 
 const StyledBasketWrapper = styled.div<{anim: any, dark: boolean}>`
     position: fixed;
-    /* min-height: 100%; */
     width: 100%;
     left: 0;
     top: 0%;
@@ -87,9 +86,9 @@ const Basket = () => {
     }
 
     const getSumOfValue = () => {
-        let counter = 0
-        basket.forEach(prod => {counter += +prod.price})
-        return counter
+        return basket.reduce((acc, item) => {
+            return acc + Number(item.price)
+        }, 0)
     }
 
 
@@ -97,7 +96,9 @@ const Basket = () => {
         if(basket.length) {
             window.Telegram.WebApp.MainButton.show()
             window.Telegram.WebApp.MainButton.setParams({
-                text: `Оформить заказ на ${getSumOfValue()}`
+                text: `Оформить заказ на ${getSumOfValue()}`,
+                color: dark? '#000000' : '#ffffff',
+                textColor: dark? '#ffffff' : '#000000'
             })
         }
         else {
@@ -131,7 +132,7 @@ const Basket = () => {
         </>
         :
         <></>}
-        <div onClick={switched}>
+        <div style={{cursor: 'pointer'}} onClick={switched}>
             <BasketIcon value={basket.length}></BasketIcon>
         </div>
     </>

@@ -31,6 +31,9 @@ const StyledSalePointPickerItem = styled.div<{dark: boolean}>`
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
+    :hover div {
+        background-color: ${props => props.dark? '#292929' : '#ffffff94'};;
+    }
 `
 
 const StyledCrossContainer = styled.div<{dark: boolean}>`
