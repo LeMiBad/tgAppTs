@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components'
 import { $tgInfo, darkThemeEnabler, desktopEnabler } from '../../store/tgData'
 import Header from '../Header/Header'
 import ProductList from '../ProductList/ProductList'
+import SalePointPicker from '../SalePointPicker/SalePointPicker'
 import './../../font/Roboto.css'
 
 declare global {
@@ -40,6 +41,7 @@ const App = () => {
     return (
         <>
             <GlobalStyle dark={dark}/>
+            <SalePointPicker/>
             <Header/>
             <ProductList/>
         </>

@@ -1,0 +1,14 @@
+@keyframes scale {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.4);
+    }
+}
+
+
+.buttonClick {
+    animation: scale 0.2s;
+}

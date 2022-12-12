@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { addBasketItem } from "../../store/basket"
+import './anim.css'
 
 
 const StyledProductList = styled.div`
@@ -37,7 +38,7 @@ const StyledNameWrapper = styled.div`
     justify-content: space-between;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    background-color: #00000040;
+    background-color: #bfbfbf;
     padding: 30px 10px 15px 10px;
     color: white;
     h3 {
@@ -48,6 +49,7 @@ const StyledNameWrapper = styled.div`
     }
     button {
         position: absolute;
+        cursor: pointer;
         z-index: 1;
         right: 5%;
         top: -15px;
@@ -62,6 +64,10 @@ const StyledNameWrapper = styled.div`
         background-color: rgb(242,18,71);
         color: white;
         border: 0;
+        transition: 0.2s;
+    }
+    button:hover {
+        background-color: #f87493;
     }
 `
 
@@ -117,6 +123,21 @@ const testProducts = [
 ]
 
 const ProductList = () => {
+
+
+    const addBasketItemHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: any) => {
+        addBasketItem(product)
+        
+        const el = e.currentTarget
+        setTimeout(() => {
+            el.classList.add('buttonClick')
+        }, 0)
+        setTimeout(() => {
+            el.classList.remove('buttonClick')
+        }, 300)
+    }
+
+
     return (
         <StyledProductList>
             {testProducts.map(row => {
@@ -127,7 +148,7 @@ const ProductList = () => {
                                 <StyledNameWrapper>
                                     <h3>{product.name}</h3>
                                     <h3>{product.price}Р</h3>
-                                    <button onClick={() => addBasketItem(product)}>+</button>
+                                    <button onClick={(e) => addBasketItemHandler(e, product)}>+</button>
                                 </StyledNameWrapper>
                             </StyledProductItem>
                         })}
