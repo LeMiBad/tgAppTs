@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import styled, { keyframes } from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import BasketIcon from "../../icons/BasketIcon"
+import BusketDelete from "../../icons/BusketDelete"
 import { $basket, deleteBasketItem } from "../../store/basket"
 import { $tgInfo } from "../../store/tgData"
 
@@ -67,9 +68,10 @@ const StyledBasketProps = styled.div<{dark: boolean}>`
 const StyledDeleteButton = styled.button<{dark: boolean}>`
     /* margin: auto 10px auto 0; */
     width: 20%;
-    font-size: 28px;
     border: 0;
-    background-color: ${props => props.dark? 'white' : 'black'};
+    cursor: pointer;
+    padding-right: 20px;
+    background-color: ${props => props.dark? 'black' : 'white'};
     color: ${props => props.dark? 'black' : 'white'};
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -129,12 +131,12 @@ const Basket = () => {
                                 <StyledBasketProps dark={dark}>
                                     <div>
                                         <h3 style={{marginTop: "10px"}}>{product.name}</h3>
-                                        <h4>{product.counter}X * {product.price}</h4>
+                                        <h4 style={{fontWeight: 500}}>{product.counter}штук * {product.price}₽</h4>
                                     </div>
                                     <h3 style={{marginBottom: "10px"}}>{+product.price * product.counter}₽</h3>
                                 </StyledBasketProps>
                             </div>
-                            <StyledDeleteButton dark={dark} onClick={() => {deleteBasketItem(`${product.name}${product.price}`)}}>-1</StyledDeleteButton>
+                            <StyledDeleteButton dark={dark} onClick={() => {deleteBasketItem(i)}}> <BusketDelete></BusketDelete> </StyledDeleteButton>
                         </StyledBasketItem>
                     })}
                 </div>

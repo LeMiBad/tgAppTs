@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createEvent, createStore } from "effector";
 
 
@@ -8,14 +9,23 @@ const initialTgInfo = {
     desktop: false
 }
 
+const config = {
+    headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+    }
+};
+
+axios.get('https://www.mc.optimiser.website/api/optimiser/2.0/apps/shop_info/3', config)
+    .then(console.log)
 
 
 export const darkThemeEnabler = createEvent()
 export const desktopEnabler = createEvent()
 export const $tgInfo = createStore(initialTgInfo)
     .on(darkThemeEnabler, state => {
-        return {...state, dark: true}
+        return { ...state, dark: true }
     })
     .on(desktopEnabler, state => {
-        return {...state, desktop: true}
+        return { ...state, desktop: true }
     })

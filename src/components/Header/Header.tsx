@@ -1,5 +1,6 @@
 import { useStore } from "effector-react"
 import styled, { createGlobalStyle } from "styled-components"
+
 import { $tgInfo } from "../../store/tgData"
 import Basket from "../Basket/Basket"
 import CategoryList from "../CategoryList/CategoryList"
