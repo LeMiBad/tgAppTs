@@ -64,6 +64,16 @@ const StyledBasketProps = styled.div<{dark: boolean}>`
     color: ${props => props.dark? 'white' : 'black'};
 `
 
+const StyledDeleteButton = styled.button<{dark: boolean}>`
+    /* margin: auto 10px auto 0; */
+    width: 20%;
+    font-size: 28px;
+    border: 0;
+    background-color: ${props => props.dark? 'white' : 'black'};
+    color: ${props => props.dark? 'black' : 'white'};
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+`
 
 const Basket = () => {
     const {openState, switchHandler} = useOpen()
@@ -110,7 +120,7 @@ const Basket = () => {
     return <>
         {(openState)? <>
             <StyledBasketWrapper dark={dark} anim={curAnim}>
-                <h1 style={{color: dark? 'white' : 'black', margin: '0px 10px 20px 0px'}}>Ваша корзина</h1>
+                <h1 style={{color: dark? 'white' : 'black', margin: '0px 10px 20px 0px'}}>Ваша корзина {basket.length? '' : 'пуста'}</h1>
                 <div style={{overflowY: 'scroll', height: '90vh'}}>
                     {basket.map((product, i) => {
                         return <StyledBasketItem dark={dark} key={product.id}>
@@ -119,12 +129,12 @@ const Basket = () => {
                                 <StyledBasketProps dark={dark}>
                                     <div>
                                         <h3 style={{marginTop: "10px"}}>{product.name}</h3>
-                                        <h4>{product.desk}</h4>
+                                        <h4>{product.counter}X * {product.price}</h4>
                                     </div>
                                     <h3 style={{marginBottom: "10px"}}>{+product.price * product.counter}₽</h3>
                                 </StyledBasketProps>
                             </div>
-                            <svg onClick={() => {deleteBasketItem(i)}} style={{cursor: 'pointer', width: '20%', margin: 'auto 0'}} focusable="false" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="m11.9997 13.4149 4.9498 4.9497 1.4142-1.4142-4.9498-4.9497 4.9498-4.9498-1.4142-1.4142-4.9498 4.9498L7.05 5.6367 5.6357 7.051l4.9498 4.9498-4.9497 4.9497L7.05 18.3646l4.9497-4.9497z" fill={dark? 'white' : 'black'}></path></svg>
+                            <StyledDeleteButton dark={dark} onClick={() => {deleteBasketItem(`${product.name}${product.price}`)}}>-1</StyledDeleteButton>
                         </StyledBasketItem>
                     })}
                 </div>
@@ -133,7 +143,7 @@ const Basket = () => {
         :
         <></>}
         <div style={{cursor: 'pointer'}} onClick={switched}>
-            <BasketIcon value={basket.length}></BasketIcon>
+            <BasketIcon value={basket.reduce((acc, prod) => acc + prod.counter, 0)}></BasketIcon>
         </div>
     </>
 }

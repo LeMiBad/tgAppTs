@@ -14,7 +14,7 @@ const initialBasket: IBasketItem[] = []
 
 
 export const addBasketItem = createEvent<IBasketItem>()
-export const deleteBasketItem = createEvent<number>()
+export const deleteBasketItem = createEvent<string>()
 export const $basket = createStore(initialBasket)
     .on(addBasketItem, (state, newBasketItem) => {
         let isHave = false
@@ -43,8 +43,25 @@ export const $basket = createStore(initialBasket)
 
         return newState
     })
-    .on(deleteBasketItem, (state, index) => {
-        state.splice(index, 1)
-        console.log(state)
-        return [...state]
+    .on(deleteBasketItem, (state, prodData) => {
+        let fullDeleted = ''
+        const newState = state.map(prod => {
+            if(`${prod.name}${prod.price}` === prodData) {
+                prod.counter -= 1
+                if(prod.counter <= 0) {
+                    fullDeleted = prodData
+                }
+                return prod
+            }
+            else {
+                return prod
+            }
+        })
+        for(let i = 0; i < newState.length; i++) {
+            if(`${newState[i].name}${newState[i].price}` === fullDeleted) {
+                newState.splice(i, 1)
+                break
+            }
+        }
+        return newState
     })
