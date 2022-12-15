@@ -66,13 +66,14 @@ const StyledBasketProps = styled.div<{dark: boolean}>`
 `
 
 const StyledDeleteButton = styled.button<{dark: boolean}>`
-    /* margin: auto 10px auto 0; */
     width: 20%;
     border: 0;
     cursor: pointer;
-    padding-right: 20px;
-    background-color: ${props => props.dark? 'black' : 'white'};
-    color: ${props => props.dark? 'black' : 'white'};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: ${props => props.dark? 'white' : 'black'};
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 `
@@ -130,7 +131,7 @@ const Basket = () => {
                                 <StyledBasketImg/>
                                 <StyledBasketProps dark={dark}>
                                     <div>
-                                        <h3 style={{marginTop: "10px"}}>{product.name}</h3>
+                                        <div style={{marginTop: "10px", fontSize: 20, fontWeight: 500, width: '170px', wordWrap: 'break-word'}}>{product.name}</div>
                                         <h4 style={{fontWeight: 500}}>{product.counter}штук * {product.price}₽</h4>
                                     </div>
                                     <h3 style={{marginBottom: "10px"}}>{+product.price * product.counter}₽</h3>

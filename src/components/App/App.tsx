@@ -1,6 +1,7 @@
 import { useStore } from 'effector-react'
 import { useEffect } from 'react'
 import { createGlobalStyle } from 'styled-components'
+import { getShopAcces } from '../../store/skladData'
 import { $tgInfo, darkThemeEnabler, desktopEnabler } from '../../store/tgData'
 import Header from '../Header/Header'
 import ProductList from '../ProductList/ProductList'
@@ -36,6 +37,11 @@ const App = () => {
 
     useEffect(() => {
         if(window.Telegram.WebApp.platform === 'tdesktop') desktopEnabler()
+    }, [])
+    
+    
+    useEffect(() => {
+        getShopAcces(3)
     }, [])
 
 
