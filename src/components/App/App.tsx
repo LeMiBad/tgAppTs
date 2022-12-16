@@ -1,5 +1,6 @@
 import { useStore } from 'effector-react'
 import { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 import { getShopAcces } from '../../store/skladData'
 import { $tgInfo, darkThemeEnabler, desktopEnabler } from '../../store/tgData'
@@ -30,6 +31,9 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
 const App = () => {
     const {dark} = useStore($tgInfo)
     
+    const [params] = useSearchParams()
+
+    const initId = params.get('id') || '3'
 
     useEffect(() => {
         if(window.Telegram.WebApp.colorScheme === 'dark') darkThemeEnabler()
@@ -41,8 +45,8 @@ const App = () => {
     
     
     useEffect(() => {
-        getShopAcces(3)
-    }, [])
+        getShopAcces(initId)
+    }, [initId])
 
 
     return (

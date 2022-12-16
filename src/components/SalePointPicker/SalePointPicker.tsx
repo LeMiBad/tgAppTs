@@ -4,6 +4,7 @@ import styled from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import { $acces, $salePoints, getSalePoints } from "../../store/skladData"
 import { $tgInfo } from "../../store/tgData"
+import Loader from "../Loader/Loader"
 
 
 const StyledSalePointPicker = styled.div<{dark: boolean}>`
@@ -72,6 +73,7 @@ const SalePointPicker = () => {
     return <>
         {openState? <></> 
         : 
+        salePoints.length? 
         <>
             <StyledSalePointPicker dark={dark}>
                 <h1 style={{color: dark? 'white' : 'black', textAlign: 'center', fontSize: '26px'}}>Выберите точку продаж</h1>
@@ -83,7 +85,10 @@ const SalePointPicker = () => {
                             </StyledSalePointPickerItem>
                 })}
             </StyledSalePointPicker>
-        </>}
+        </> 
+        : 
+        <Loader/> 
+        }
     </>
 }
 

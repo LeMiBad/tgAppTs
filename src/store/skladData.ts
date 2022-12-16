@@ -10,7 +10,7 @@ interface IAcces {
 
 const initialAcces = {access_token: '', account_id: '', org_name: ''}
 
-export const getShopAcces = createEffect(async (id: number) => {
+export const getShopAcces = createEffect(async (id: string) => {
     const config = {
         headers: {
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
