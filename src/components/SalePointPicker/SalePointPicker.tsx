@@ -2,7 +2,7 @@ import { useStore } from "effector-react"
 import { useEffect } from "react"
 import styled from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
-import { $acces, $salePoints, getSalePoints } from "../../store/skladData"
+import { $acces, $salePoints, getCategories, getSalePoints } from "../../store/skladData"
 import { $tgInfo } from "../../store/tgData"
 import Loader from "../Loader/Loader"
 
@@ -66,9 +66,11 @@ const SalePointPicker = () => {
     useEffect(() => {
         if(account_id.length) {
             getSalePoints(account_id)
+            getCategories(account_id)
         }
     }, [account_id])
 
+    
 
     return <>
         {openState? <></> 

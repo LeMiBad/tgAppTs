@@ -78,7 +78,7 @@ const StyledDeleteButton = styled.button<{dark: boolean}>`
     border-bottom-left-radius: 10px;
 `
 
-const Basket = () => {
+const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => {
     const {openState, switchHandler} = useOpen()
     const [curAnim, setCurAnim] = useState(enter)
     const basket = useStore($basket)
@@ -88,6 +88,7 @@ const Basket = () => {
     const switched = () => {
         if(openState) {
             setCurAnim(exit)
+            if(exitProductPage) exitProductPage()
             setTimeout(() => {
                 switchHandler()
             }, 200)
@@ -145,7 +146,7 @@ const Basket = () => {
         </>
         :
         <></>}
-        <div style={{cursor: 'pointer'}} onClick={switched}>
+        <div style={{cursor: 'pointer', position: 'relative'}} onClick={switched}>
             <BasketIcon value={basket.reduce((acc, prod) => acc + prod.counter, 0)}></BasketIcon>
         </div>
     </>

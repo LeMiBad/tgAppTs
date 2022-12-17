@@ -47,7 +47,7 @@ const App = () => {
     useEffect(() => {
         getShopAcces(initId)
     }, [initId])
-
+    
 
     return (
         <>

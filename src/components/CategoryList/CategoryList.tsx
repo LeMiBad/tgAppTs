@@ -1,6 +1,8 @@
 import { useStore } from "effector-react"
+import { useEffect } from "react"
 import styled from "styled-components"
 import { $category, setCategory } from "../../store/pickedCategory"
+import { $acces, $categories, getCategories } from "../../store/skladData"
 import { $tgInfo } from "../../store/tgData"
 
 
@@ -39,9 +41,14 @@ const CategoryList = () => {
     const {dark, desktop} = useStore($tgInfo)
     const activeCategory  = useStore($category)
 
-
-    const categoryList = ['Шарфы', 'Часы', 'Джинсы', 'Куртки', 'Обувь', 'Колготки', 'Кросовки', 'Кофе', 'Пальто', 'Рюкзаки', 'Стеллажи', 'Скрипки', 'Гитары', 'Страны', 'Чашки', 'Тарелки',]
-
+    const {account_id} = useStore($acces)
+    const categories = useStore($categories)
+    
+    useEffect(() => {
+        if(account_id.length) {
+            getCategories(account_id)
+        }
+    }, [account_id])
 
 
 
@@ -59,9 +66,9 @@ const CategoryList = () => {
     return (
         <>
             <StyledCategoryList dark={dark} desktop={desktop}>
-                {categoryList.map((category, i) => {
-                    if(category === activeCategory) return <StyledCategoryListItem dark={dark} active={true} key={category + i} onClick={(e) => pickCategory(e, category)}>{category}</StyledCategoryListItem>
-                    return <StyledCategoryListItem dark={dark} key={category + i} onClick={(e) => pickCategory(e, category)}>{category}</StyledCategoryListItem>
+                {categories.map(({user_folder_name}, i) => {
+                    if(user_folder_name === activeCategory) return <StyledCategoryListItem dark={dark} active={true} key={user_folder_name + i} onClick={(e) => pickCategory(e, user_folder_name)}>{user_folder_name}</StyledCategoryListItem>
+                    return <StyledCategoryListItem dark={dark} key={user_folder_name + i} onClick={(e) => pickCategory(e, user_folder_name)}>{user_folder_name}</StyledCategoryListItem>
                 })}
             </StyledCategoryList>
         </>

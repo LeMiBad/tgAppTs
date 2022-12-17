@@ -19,12 +19,13 @@ const Wrapper = styled.div<{dark: boolean}>`
 
 const Loader = () => {
     const {dark} = useStore($tgInfo)
+    // {dark? 'white' : 'black'} На всякий случай
 
     return (
         <Wrapper dark={dark}>
             <ThreeCircles
-                height="250"
-                width="250"
+                height="125"
+                width="125"
                 color="#EE6738"
                 wrapperStyle={{}}
                 wrapperClass=""

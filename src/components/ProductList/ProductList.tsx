@@ -1,5 +1,7 @@
 import styled from "styled-components"
+import useOpen from "../../hooks/useOpeningSwitcher"
 import { addBasketItem } from "../../store/basket"
+import ProductPage from "../ProductPage/ProductPage"
 import './anim.css'
 
 
@@ -123,7 +125,7 @@ const testProducts = [
 ]
 
 const ProductList = () => {
-
+    const {openState, switchHandler} = useOpen()
 
     const addBasketItemHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: any) => {
         addBasketItem(product)
@@ -137,24 +139,31 @@ const ProductList = () => {
         }, 300)
     }
 
+    const ProductPageSwitcher = () => {
+        switchHandler()
+    }
+
 
     return (
-        <StyledProductList>
-            {testProducts.map(row => {
-                    return <StyledProductRow key={row[0].id}>
-                        {row.map(product => {
-                            return <StyledProductItem key={product.id}>
-                                <StyledProductImg/>
-                                <StyledNameWrapper>
-                                    <h3>{product.name}</h3>
-                                    <h3>{product.price}Р</h3>
-                                    <button onClick={(e) => addBasketItemHandler(e, product)}>+</button>
-                                </StyledNameWrapper>
-                            </StyledProductItem>
-                        })}
-                    </StyledProductRow>
-                })}
-        </StyledProductList>
+        <>
+            {openState? <ProductPage exit={switchHandler}></ProductPage> : <></>}
+            <StyledProductList>
+                {testProducts.map(row => {
+                        return <StyledProductRow key={row[0].id}>
+                            {row.map(product => {
+                                return <StyledProductItem key={product.id}>
+                                    <StyledProductImg onClick={ProductPageSwitcher}/>
+                                    <StyledNameWrapper>
+                                        <h3>{product.name}</h3>
+                                        <h3>{product.price}Р</h3>
+                                        <button onClick={(e) => addBasketItemHandler(e, product)}>+</button>
+                                    </StyledNameWrapper>
+                                </StyledProductItem>
+                            })}
+                        </StyledProductRow>
+                    })}
+            </StyledProductList>
+        </>
     )
 }
 
