@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/tgAppTs/static/css/main.34c64beb.css",
-    "main.js": "/tgAppTs/static/js/main.65c6cead.js",
+    "main.js": "/tgAppTs/static/js/main.d1b776fa.js",
     "index.html": "/tgAppTs/index.html",
     "main.34c64beb.css.map": "/tgAppTs/static/css/main.34c64beb.css.map",
-    "main.65c6cead.js.map": "/tgAppTs/static/js/main.65c6cead.js.map"
+    "main.d1b776fa.js.map": "/tgAppTs/static/js/main.d1b776fa.js.map"
   },
   "entrypoints": [
     "static/css/main.34c64beb.css",
-    "static/js/main.65c6cead.js"
+    "static/js/main.d1b776fa.js"
   ]
 }
