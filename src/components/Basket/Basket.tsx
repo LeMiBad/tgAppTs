@@ -114,8 +114,10 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
                 color: dark? '#ffffff' : '#000000',
                 text_color: dark? '#000000' : '#ffffff'
             })
+            window.Telegram.WebApp.onEvent('mainButtonClicked', switched)
         }
         else {
+            window.Telegram.WebApp.offEvent('mainButtonClicked', switched)
             window.Telegram.WebApp.MainButton.hide()
         }
     })
