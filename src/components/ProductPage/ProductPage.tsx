@@ -119,7 +119,7 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
         window.Telegram.WebApp.onEvent('mainButtonClicked', () => {
             addBasketItem({
                 id: basket.length,
-                counter: basket.length,
+                counter: 1,
                 name: name,
                 desk: desk,
                 price: price,
