@@ -101,8 +101,8 @@ export const getProducts = createEffect(async (acces: string, category: string) 
             "Authorization": `Bearer 5f91247657fc61642ba55676b654b9407b09de9b`
         },
     }
-
-    const url = `/api/remap/1.2/entity/product`
+    
+    const url = 'https://cors-anywhere.herokuapp.com/https://online.moysklad.ru/api/remap/1.2/entity/product'
     const data = await axios(url, config)
     console.log(data.data)
 })
