@@ -100,16 +100,14 @@ export const getProducts = createEffect(async (acces: string,category: string) =
             "Accept": "*/*",
             "Content-Type": "application/json",
             // 'Access-Control-Allow-Credentials': "true",
-            "Authorization": `Bearer <5f91247657fc61642ba55676b654b9407b09de9b>`
+            "Authorization": `Bearer 5f91247657fc61642ba55676b654b9407b09de9b`
         },
     }
 
-    const url = `https://online.moysklad.ru/api/remap/1.2/entity/product?filter=pathName=${'ПРОД_ЛАВАШ'}`
+    const url = `https://online.moysklad.ru/api/remap/1.2/entity/product`
     const data = await axios(url, config)
     console.log(data,123)
 })
 
 export const $products = createStore<ICategories[]>([])
     .on(getCategories.done, (_, {params, result}) => result)
-    
-    
