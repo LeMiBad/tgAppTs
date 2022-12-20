@@ -76,8 +76,40 @@ export const getCategories = createEffect(async (clientId: string) => {
 
     const url = `https://www.mc.optimiser.website/api/optimiser/2.0/apps/configure/${clientId}`
     const data = await axios(url, config)
+    console.log(data.data.current_folder_id)
     return data.data.current_folder_id
 })
 
 export const $categories = createStore<ICategories[]>([])
-    .on(getCategories.done, (_, {params, result}) => result) 
+    .on(getCategories.done, (_, {params, result}) => result)
+
+
+
+
+
+interface IProducts {
+    folder_id:  string,
+    folder_name :  string, 
+    user_folder_name :  string
+}
+    
+export const getProducts = createEffect(async (acces: string,category: string) => {
+    const config = {
+        headers: {
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            "Accept": "*/*",
+            "Content-Type": "application/json",
+            // 'Access-Control-Allow-Credentials': "true",
+            "Authorization": `Bearer <5f91247657fc61642ba55676b654b9407b09de9b>`
+        },
+    }
+
+    const url = `https://online.moysklad.ru/api/remap/1.2/entity/product?filter=pathName=${'ПРОД_ЛАВАШ'}`
+    const data = await axios(url, config)
+    console.log(data,123)
+})
+
+export const $products = createStore<ICategories[]>([])
+    .on(getCategories.done, (_, {params, result}) => result)
+    
+    

@@ -1,6 +1,9 @@
+import { useStore } from "effector-react"
+import { useEffect } from "react"
 import styled from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import { addBasketItem } from "../../store/basket"
+import { $acces, getProducts } from "../../store/skladData"
 import ProductPage from "../ProductPage/ProductPage"
 import './anim.css'
 
@@ -125,6 +128,7 @@ const testProducts = [
 ]
 
 const ProductList = () => {
+    const acces = useStore($acces)
     const {openState, switchHandler} = useOpen()
 
     const addBasketItemHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: any) => {
@@ -142,6 +146,11 @@ const ProductList = () => {
     const ProductPageSwitcher = () => {
         switchHandler()
     }
+
+
+    useEffect(() => {
+        getProducts('123')
+    }, [])
 
 
     return (

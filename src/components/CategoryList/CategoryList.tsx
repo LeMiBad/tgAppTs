@@ -33,6 +33,7 @@ const StyledCategoryListItem = styled.div<{active?: boolean, dark: boolean}>`
     font-weight: ${props => props.active? '600' : '400'};
     color: ${props => props.active? props.dark? 'white' : 'black' : '#a09a9a'};
     height: 100%;
+    white-space: nowrap;
     cursor: pointer;
 `
 
