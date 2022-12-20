@@ -92,35 +92,19 @@ interface IProducts {
 }
 
 export const getProducts = createEffect(async (acces: string, category: string) => {
-    // const config = {
-    //     headers: {
-    //         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    //         "Accept": "*/*",
-    //         "Content-Type": "application/json",
-    //         'Access-Control-Allow-Credentials': "true",
-    //         "Authorization": `Bearer 5f91247657fc61642ba55676b654b9407b09de9b`
-    //     },
-    // }
-
-    // const url = `/api/remap/1.2/entity/product`
-    // const data = await axios(url, config)
-    // console.log(data)
-
-    var config = {
-        method: 'get',
-        url: '/api/remap/1.2/entity/product',
+    const config = {
         headers: {
-            'Authorization': 'Bearer 5f91247657fc61642ba55676b654b9407b09de9b'
-        }
-    };
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            "Accept": "*/*",
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Credentials': "true",
+            "Authorization": `Bearer 5f91247657fc61642ba55676b654b9407b09de9b`
+        },
+    }
 
-    axios(config)
-        .then(function (response) {
-            console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    const url = `/api/remap/1.2/entity/product`
+    const data = await axios(url, config)
+    console.log(data.data)
 })
 
 export const $products = createStore<ICategories[]>([])
