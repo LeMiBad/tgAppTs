@@ -85,27 +85,34 @@ export const $categories = createStore<ICategories[]>([])
 
 
 
-interface IProducts {
-    folder_id: string,
-    folder_name: string,
-    user_folder_name: string
-}
 
-export const getProducts = createEffect(async (acces: string, category: string) => {
+export const getProducts = createEffect(async ({acces, category}: {acces: string, category: string}) => {
     const config = {
         headers: {
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
             "Accept": "*/*",
             "Content-Type": "application/json",
             'Access-Control-Allow-Credentials': "true",
-            "Authorization": `Bearer 5f91247657fc61642ba55676b654b9407b09de9b`
+            "Authorization": `Bearer ${acces}`
         },
     }
     
-    const url = 'https://cors-anywhere.herokuapp.com/https://online.moysklad.ru/api/remap/1.2/entity/product'
+    const url = `https://www.mc.optimiser.website/api/remap/1.2/entity/product?filter=pathName=${category}`
     const data = await axios(url, config)
+
+
+    let newArr = []
+    let beetweenArr = []
+    for(let i = 0; i < data.data.rows.length; i++) {
+        if(beetweenArr.length === 2) {
+            newArr.push(beetweenArr)
+            beetweenArr =[]
+        }
+        beetweenArr.push(data.data.rows[i])
+    }
     console.log(data.data)
+    return newArr
 })
 
-export const $products = createStore<ICategories[]>([])
-    .on(getCategories.done, (_, { params, result }) => result)
+export const $products = createStore<any[]>([])
+    .on(getProducts.done, (_, { params, result }) => result)

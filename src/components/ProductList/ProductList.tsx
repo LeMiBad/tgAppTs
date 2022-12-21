@@ -3,7 +3,8 @@ import { useEffect } from "react"
 import styled from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import { addBasketItem } from "../../store/basket"
-import { $acces, getProducts } from "../../store/skladData"
+import { $category } from "../../store/pickedCategory"
+import { $acces, $products, getProducts } from "../../store/skladData"
 import ProductPage from "../ProductPage/ProductPage"
 import './anim.css'
 
@@ -45,6 +46,7 @@ const StyledNameWrapper = styled.div`
     border-bottom-right-radius: 10px;
     background-color: #e19946;
     padding: 30px 10px 15px 10px;
+    height: 35px;
     color: white;
     h3 {
         font-size: 16px;
@@ -118,18 +120,23 @@ const testProducts = [
         name: 'Кастрюля',
         desk: 'С антипригарочным покрытием',
         price: '1200'
-    },
-    {
-        id: 7,
-        name: 'Кольцо',
-        desk: 'Для предстоящего бракосочетания',
-        price: '12500'
-    },],
+    }],
 ]
 
 const ProductList = () => {
-    const acces = useStore($acces)
+    const {access_token} = useStore($acces)
     const {openState, switchHandler} = useOpen()
+    const {folder_name} = useStore($category)
+    let products = useStore($products)
+    
+    const ProductPageSwitcher = () => {
+        switchHandler()
+    }
+
+    useEffect(() => {
+        getProducts({acces: access_token, category: folder_name})
+    }, [access_token, folder_name])
+
 
     const addBasketItemHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: any) => {
         addBasketItem(product)
@@ -143,28 +150,22 @@ const ProductList = () => {
         }, 300)
     }
 
-    const ProductPageSwitcher = () => {
-        switchHandler()
-    }
-
-
-    useEffect(() => {
-        getProducts('123')
-    }, [])
-
+    console.log(products)
 
     return (
         <>
             {openState? <ProductPage exit={switchHandler}></ProductPage> : <></>}
             <StyledProductList>
-                {testProducts.map(row => {
+                {products.map((row, ind: number) => {
                         return <StyledProductRow key={row[0].id}>
-                            {row.map(product => {
-                                return <StyledProductItem key={product.id}>
+                            {row.map((product: any, i: number) => {
+                                return <StyledProductItem key={ind+1 + i+1}>
                                     <StyledProductImg onClick={ProductPageSwitcher}/>
                                     <StyledNameWrapper>
-                                        <h3>{product.name}</h3>
-                                        <h3>{product.price}Р</h3>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10}}>
+                                            <h3>{product.name}</h3>
+                                            <h3>123Р</h3>
+                                        </div>
                                         <button onClick={(e) => addBasketItemHandler(e, product)}>+</button>
                                     </StyledNameWrapper>
                                 </StyledProductItem>

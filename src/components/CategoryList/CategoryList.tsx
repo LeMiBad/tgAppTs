@@ -45,15 +45,21 @@ const CategoryList = () => {
     const {account_id} = useStore($acces)
     const categories = useStore($categories)
     
+
+    useEffect(() => {
+        if(categories.length) {
+            setCategory(categories[0])
+        }
+    }, [categories])
+
     useEffect(() => {
         if(account_id.length) {
             getCategories(account_id)
         }
     }, [account_id])
 
-
-
-    const pickCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, category: string) => {
+    
+    const pickCategory = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, category: any) => {
         setCategory(category)
         if(e.currentTarget.parentElement) {
             e.currentTarget.parentElement.scrollLeft = 0
@@ -63,13 +69,12 @@ const CategoryList = () => {
         })
     }
 
-
     return (
         <>
             <StyledCategoryList dark={dark} desktop={desktop}>
-                {categories.map(({user_folder_name}, i) => {
-                    if(user_folder_name === activeCategory) return <StyledCategoryListItem dark={dark} active={true} key={user_folder_name + i} onClick={(e) => pickCategory(e, user_folder_name)}>{user_folder_name}</StyledCategoryListItem>
-                    return <StyledCategoryListItem dark={dark} key={user_folder_name + i} onClick={(e) => pickCategory(e, user_folder_name)}>{user_folder_name}</StyledCategoryListItem>
+                {categories.map((category, i) => {
+                    if(category.user_folder_name === activeCategory.user_folder_name) return <StyledCategoryListItem dark={dark} active={true} key={category.user_folder_name + i} onClick={(e) => pickCategory(e, category)}>{category.user_folder_name}</StyledCategoryListItem>
+                    return <StyledCategoryListItem dark={dark} key={category.user_folder_name + i} onClick={(e) => pickCategory(e, category)}>{category.user_folder_name}</StyledCategoryListItem>
                 })}
             </StyledCategoryList>
         </>
