@@ -108,24 +108,24 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
     const basket = useStore($basket)
 
 
-    useEffect(() => {
-        window.Telegram.WebApp.MainButton.hide()
-        window.Telegram.WebApp.MainButton.show()
-        window.Telegram.WebApp.MainButton.setParams({
-            text: `Добавить в корзину +${price}`,
-            color: dark? '#ffffff' : '#000000',
-            text_color: dark? '#000000' : '#ffffff'
-        })
-        window.Telegram.WebApp.onEvent('mainButtonClicked', () => {
-            addBasketItem({
-                id: basket.length,
-                counter: 1,
-                name: name,
-                desk: desk,
-                price: price,
-            })
-        })
-    })
+    // useEffect(() => {
+    //     window.Telegram.WebApp.MainButton.hide()
+    //     window.Telegram.WebApp.MainButton.show()
+    //     window.Telegram.WebApp.MainButton.setParams({
+    //         text: `Добавить в корзину +${price}`,
+    //         color: dark? '#ffffff' : '#000000',
+    //         text_color: dark? '#000000' : '#ffffff'
+    //     })
+    //     window.Telegram.WebApp.onEvent('mainButtonClicked', () => {
+    //         addBasketItem({
+    //             id: basket.length,
+    //             counter: 1,
+    //             name: name,
+    //             desk: desk,
+    //             price: price,
+    //         })
+    //     })
+    // })
 
     return  <>
         <Wrapper anim={enter} dark={dark}>

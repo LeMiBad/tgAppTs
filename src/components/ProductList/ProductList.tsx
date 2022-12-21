@@ -1,10 +1,11 @@
 import { useStore } from "effector-react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import { addBasketItem } from "../../store/basket"
 import { $category } from "../../store/pickedCategory"
 import { $acces, $products, getProducts } from "../../store/skladData"
+import Loader from "../Loader/Loader"
 import ProductPage from "../ProductPage/ProductPage"
 import './anim.css'
 
@@ -87,6 +88,7 @@ const ProductList = () => {
     const {access_token} = useStore($acces)
     const {openState, switchHandler} = useOpen()
     const {folder_name} = useStore($category)
+    const [isLoading, setIsLoaing] = useState(true)
     let products = useStore($products)
     
     const ProductPageSwitcher = () => {
@@ -94,12 +96,27 @@ const ProductList = () => {
     }
 
     useEffect(() => {
+        getProducts.pending.watch(pending => {
+            setIsLoaing(pending)
+        })
+    }, [])
+
+    useEffect(() => {
         getProducts({acces: access_token, category: folder_name})
     }, [access_token, folder_name])
 
 
     const addBasketItemHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: any) => {
-        addBasketItem(product)
+        console.log(product)
+        addBasketItem(
+            {
+                id: product.externalCode,
+                counter: 1,
+                name: product.name,
+                desk: product.description,
+                price: product.salePrices[0].value,
+            }
+        )
         
         const el = e.currentTarget
         setTimeout(() => {
@@ -115,20 +132,24 @@ const ProductList = () => {
         <>
             {openState? <ProductPage exit={switchHandler}></ProductPage> : <></>}
             <StyledProductList>
-                {products.map((row, ind: number) => {
-                        return <StyledProductRow key={row[0].id}>
-                            {row.map((product: any, i: number) => {
+                {!isLoading? <>
+                    {products.map((row, ind: number) => {
+                        return <StyledProductRow key={ind}>
+                            {row.map(({data}: any, i: number) => {
                                 return <StyledProductItem key={ind+1 + i+1}>
                                     <StyledProductImg onClick={ProductPageSwitcher}/>
                                     <StyledNameWrapper>
-                                        <h3>{product.name}</h3>
-                                        <h3 className="price">{product.salePrices[0].value}Р</h3>
-                                        <button onClick={(e) => addBasketItemHandler(e, product)}>+</button>
+                                        <h3>{data.name}</h3>
+                                        <h3 className="price">{data.salePrices[0].value}Р</h3>
+                                        <button onClick={(e) => addBasketItemHandler(e, data)}>+</button>
                                     </StyledNameWrapper>
                                 </StyledProductItem>
                             })}
                         </StyledProductRow>
                     })}
+                </> 
+                : 
+                <Loader/>}
             </StyledProductList>
         </>
     )

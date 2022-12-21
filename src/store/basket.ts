@@ -1,7 +1,7 @@
 import { createEvent, createStore } from "effector";
 
 interface IBasketItem {
-    id: number
+    id: string
     counter: number
     name: string
     desk: string

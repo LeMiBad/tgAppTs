@@ -69,6 +69,7 @@ const CategoryList = () => {
         })
     }
 
+
     return (
         <>
             <StyledCategoryList dark={dark} desktop={desktop}>
