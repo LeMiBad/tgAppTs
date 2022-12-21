@@ -86,14 +86,14 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
 
 
     const switched = () => {
-        // if(openState) {
-        //     setCurAnim(exit)
-        //     if(exitProductPage) exitProductPage()
-        //     setTimeout(() => {
-        //         switchHandler()
-        //     }, 200)
-        // }
-        if(!openState) {
+        if(openState) {
+            setCurAnim(exit)
+            if(exitProductPage) exitProductPage()
+            setTimeout(() => {
+                switchHandler()
+            }, 200)
+        }
+        else {
             setCurAnim(enter)
             switchHandler()
         }
@@ -106,21 +106,21 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
     }
 
 
-    useEffect(() => {
-        if(basket.length) {
-            window.Telegram.WebApp.MainButton.show()
-            window.Telegram.WebApp.MainButton.setParams({
-                text: `Оформить заказ на ${getSumOfValue()}`,
-                color: dark? '#ffffff' : '#000000',
-                text_color: dark? '#000000' : '#ffffff'
-            })
-            window.Telegram.WebApp.onEvent('mainButtonClicked', switched)
-        }
-        else {
-            window.Telegram.WebApp.offEvent('mainButtonClicked', switched)
-            window.Telegram.WebApp.MainButton.hide()
-        }
-    })
+    // useEffect(() => {
+    //     if(basket.length) {
+    //         window.Telegram.WebApp.MainButton.show()
+    //         window.Telegram.WebApp.MainButton.setParams({
+    //             text: `Оформить заказ на ${getSumOfValue()}`,
+    //             color: dark? '#ffffff' : '#000000',
+    //             text_color: dark? '#000000' : '#ffffff'
+    //         })
+    //         window.Telegram.WebApp.onEvent('mainButtonClicked', switched)
+    //     }
+    //     else {
+    //         window.Telegram.WebApp.offEvent('mainButtonClicked', switched)
+    //         window.Telegram.WebApp.MainButton.hide()
+    //     }
+    // })
 
 
     return <>
