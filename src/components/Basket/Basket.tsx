@@ -86,14 +86,14 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
 
 
     const switched = () => {
-        if(openState) {
-            setCurAnim(exit)
-            if(exitProductPage) exitProductPage()
-            setTimeout(() => {
-                switchHandler()
-            }, 200)
-        }
-        else {
+        // if(openState) {
+        //     setCurAnim(exit)
+        //     if(exitProductPage) exitProductPage()
+        //     setTimeout(() => {
+        //         switchHandler()
+        //     }, 200)
+        // }
+        if(!openState) {
             setCurAnim(enter)
             switchHandler()
         }
