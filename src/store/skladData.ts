@@ -110,7 +110,9 @@ export const getProducts = createEffect(async ({acces, category}: {acces: string
         }
         beetweenArr.push(data.data.rows[i])
     }
-    console.log(data.data)
+
+    // const images = await axios(newArr[0][0].images.meta.href, config)
+
     return newArr
 })
 

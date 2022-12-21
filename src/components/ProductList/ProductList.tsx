@@ -27,6 +27,7 @@ const StyledProductItem = styled.div`
     display: flex;
     width: 43vw;
     flex-direction: column;
+    height: 100%;
     box-shadow: 8px 8px 11px #00000040;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -46,12 +47,15 @@ const StyledNameWrapper = styled.div`
     border-bottom-right-radius: 10px;
     background-color: #e19946;
     padding: 30px 10px 15px 10px;
-    height: 35px;
     color: white;
+    .price {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
     h3 {
         font-size: 16px;
         font-weight: 500;
-        text-align: center;
         max-width: 100%;
     }
     button {
@@ -78,50 +82,6 @@ const StyledNameWrapper = styled.div`
     }
 `
 
-const testProducts = [
-    [{
-        id: 0,
-        name: 'Обувь',
-        desk: 'Предназначена для ношения',
-        price: '2500'
-    },
-    {
-        id: 1,
-        name: 'Скрепка',
-        desk: 'Для крепежей',
-        price: '15'
-    },],
-    [{
-        id: 2,
-        name: 'Кастрюля',
-        desk: 'С антипригарочным покрытием',
-        price: '1200'
-    },
-    {
-        id: 3,
-        name: 'Кольцо',
-        desk: 'Для предстоящего бракосочетания',
-        price: '12500'
-    },],
-    [{
-        id: 4,
-        name: 'Кастрюля',
-        desk: 'С антипригарочным покрытием',
-        price: '1200'
-    },
-    {
-        id: 5,
-        name: 'Кольцо',
-        desk: 'Для предстоящего бракосочетания',
-        price: '12500'
-    },],
-    [{
-        id: 6,
-        name: 'Кастрюля',
-        desk: 'С антипригарочным покрытием',
-        price: '1200'
-    }],
-]
 
 const ProductList = () => {
     const {access_token} = useStore($acces)
@@ -150,7 +110,6 @@ const ProductList = () => {
         }, 300)
     }
 
-    console.log(products)
 
     return (
         <>
@@ -162,10 +121,8 @@ const ProductList = () => {
                                 return <StyledProductItem key={ind+1 + i+1}>
                                     <StyledProductImg onClick={ProductPageSwitcher}/>
                                     <StyledNameWrapper>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10}}>
-                                            <h3>{product.name}</h3>
-                                            <h3>123Р</h3>
-                                        </div>
+                                        <h3>{product.name}</h3>
+                                        <h3 className="price">{product.salePrices[0].value}Р</h3>
                                         <button onClick={(e) => addBasketItemHandler(e, product)}>+</button>
                                     </StyledNameWrapper>
                                 </StyledProductItem>
