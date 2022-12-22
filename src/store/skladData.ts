@@ -123,13 +123,25 @@ export const getProducts = createEffect(async ({acces, category}: {acces: string
         }
 
         
-        console.log(`https://www.mc.optimiser.website/api/remap/1.2/${imagesUrl.data.rows[0].meta.downloadHref.split('/').slice(6).join('/')}`)
-        // const images = await axios(`https://www.mc.optimiser.website/api/remap/1.2/${imagesUrl.data.rows[0].meta.downloadHref.split('/').slice(6).join('/')}}`, config)
-        const images = await axios(`https://www.mc.optimiser.website/api/remap/1.2/${imagesUrl.data.rows[0].meta.downloadHref.split('/').slice(6).join('/')}}`, config)
-        console.log(images)
+        var dataPost = JSON.stringify({
+            "img_id": "54a76699-d7be-4866-97bd-d5d26ba5f534"
+        });
+        
+        
+        var cfg = {
+            method: 'post',
+            url: 'https://www.mc.optimiser.website/api/get_image',
+            headers: { 
+                'Authorization': 'Bearer 5f91247657fc61642ba55676b654b9407b09de9b', 
+                'Content-Type': 'application/json'
+            },
+            data : dataPost
+        };
 
+        const img = await axios(cfg)
+        console.log(img.data.img_url)
 
-        beetweenArr.push(product)
+        beetweenArr.push({...product, img: img.data.img_url})
     }
 
 

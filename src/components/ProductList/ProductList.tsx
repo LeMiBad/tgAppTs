@@ -34,10 +34,10 @@ const StyledProductItem = styled.div`
     border-bottom-right-radius: 10px;
 `
 
-const StyledProductImg = styled.div`
+const StyledProductImg = styled.img`
     height: 43vw;
     background-size: contain !important;
-    background: url('https://papik.pro/uploads/posts/2021-09/1631839563_11-papik-pro-p-krasivie-kvadratnie-risunki-12.jpg');
+    /* background: url('https://papik.pro/uploads/posts/2021-09/1631839563_11-papik-pro-p-krasivie-kvadratnie-risunki-12.jpg'); */
 `
 
 const StyledNameWrapper = styled.div`
@@ -135,9 +135,9 @@ const ProductList = () => {
                 {!isLoading? <>
                     {products.map((row, ind: number) => {
                         return <StyledProductRow key={ind}>
-                            {row.map(({data}: any, i: number) => {
+                            {row.map(({data, img}: any, i: number) => {
                                 return <StyledProductItem key={ind+1 + i+1}>
-                                    <StyledProductImg onClick={ProductPageSwitcher}/>
+                                    <StyledProductImg src={img} onClick={ProductPageSwitcher}/>
                                     <StyledNameWrapper>
                                         <h3>{data.name}</h3>
                                         <h3 className="price">{data.salePrices[0].value}Р</h3>
