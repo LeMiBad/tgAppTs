@@ -1,10 +1,14 @@
 import { useStore } from "effector-react"
 import styled, { keyframes } from "styled-components"
 import ArrowIcon from "../../icons/ArrowIcon"
+import useProductImages from "../../hooks/useProductImages"
 import { $basket } from "../../store/basket"
 import { $ProductPage } from "../../store/ProductPage"
 import { $tgInfo } from "../../store/tgData"
 import Basket from "../Basket/Basket"
+import NotImage from "../Product/NotImage"
+import BigArrow from "../../icons/BigArrow"
+import { useState } from "react"
 
 
 interface IProps {
@@ -50,10 +54,11 @@ const ImgWrapper = styled.div`
     height: 35vh;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    gap: 15px;
     img {
-        width: 30vh;
-        height: 30vh;
+        width: 50vw;
+        /* height: 30vh; */
         border-radius: 30px;
     }
 `
@@ -104,13 +109,41 @@ const KindItem = styled.div<{dark: boolean}>`
     white-space: nowrap;
 `
 
+const ArrowWrapper = styled.div<{dark: boolean}>`
+    min-width: 50px;
+    min-height: 50px;
+    border-radius: 50px;
+    background-color: ${props => props.dark? 'white' : 'black'};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 const ProductPage: React.FC<IProps>  = ({exit}) => {
     const {dark} = useStore($tgInfo)
-    const {name, price, description, img, kinds} = useStore($ProductPage)
+    const data: any = useStore($ProductPage)
     const basket = useStore($basket)
+    const {images, isLoading} = useProductImages(data)
+    const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
 
 
+    const rightSlide = () => {
+        if(imgIndex+1 === images.length) {
+            setCurImg({imgIndex: imgIndex+1, slideState: 'right'})
+        }
+        else setCurImg({imgIndex: imgIndex+1, slideState: ''})
+    }
+
+    const leftSlide = () => {
+        if(imgIndex === 1 || imgIndex === 0) {
+            setCurImg({imgIndex: 0, slideState: 'left'})
+        }
+        else {
+            setCurImg({imgIndex: imgIndex-1, slideState: ''})
+        }
+    }
+
+    
     // useEffect(() => {
     //     window.Telegram.WebApp.MainButton.hide()
     //     window.Telegram.WebApp.MainButton.show()
@@ -137,15 +170,25 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
                 <Basket exitProductPage={exit}/>
             </Navbar>
             <ImgWrapper>
-                <img src={img} alt="" />
+                {imgIndex? <ArrowWrapper onClick={leftSlide} dark={dark}>
+                    <BigArrow left/>
+                </ArrowWrapper> : <div style={{width: 50, height: 50}}></div>}
+                { isLoading? 
+                <div style={{width: '50vw'}}><NotImage/></div> 
+                : 
+                <img src={images[imgIndex]} alt="" />}
+                {imgIndex < images.length-1? <ArrowWrapper onClick={rightSlide} dark={dark}>
+                        <BigArrow/>
+                    </ArrowWrapper> : <div style={{width: 50, height: 50}}></div>
+                }
             </ImgWrapper>
             <InfoWrapper>
                 <NameWrapper dark={dark}>
-                    <h1>{name}</h1>
-                    <h2>{price}Р</h2>
+                    <h1>{data.name}</h1>
+                    <h2>{data.salePrices[0].value}Р</h2>
                 </NameWrapper>
                 <h1 style={{fontSize: '24px', color: dark? 'white' : 'black'}}>Описание</h1>
-                <p style={{color: dark? 'white' : 'black'}}>{description}</p>
+                <p style={{color: dark? 'white' : 'black'}}>{data.description}</p>
                 <KindsWrapper>
                     {/* kinds.length? {kinds.map(kind => <KindItem dark={dark} key={kind}>{kind}</KindItem>)} */}
                 </KindsWrapper>

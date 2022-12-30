@@ -113,7 +113,6 @@ export const getProducts = createEffect(async ({acces, category}: {acces: string
     }
 
 
-    console.log(newArr)
     return newArr
 })
 

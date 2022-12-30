@@ -1,11 +1,10 @@
 // import axios from "axios"
-import { useStore } from "effector-react"
-import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { $acces } from "../../store/skladData"
-import { getImage } from "../../utils/getImage"
+import useProductImages from "../../hooks/useProductImages"
 import {productUpdate} from './../../store/ProductPage'
 import NotImage from "./NotImage"
+
+
 
 
 interface ProductItemProps {
@@ -76,32 +75,18 @@ const StyledNameWrapper = styled.div`
 
 
 const Product: React.FC<ProductItemProps> = ({data, ProductPageSwitcher, addBasketItemHandler}) => {
-    const {access_token} = useStore($acces)
-    const [{images, isLoading}, setImages] = useState<{images: string[], isLoading: boolean}>({images: [], isLoading: true})
+    const {images, isLoading} = useProductImages(data)    
 
-    useEffect(() => {
-        getImage(data.images.meta.href, access_token)
-            .then(data => {
-                data.forEach((imgFetch) => {
-                    imgFetch.then(imgData => {
-                        const img: string = imgData.data.img_url
-                        setImages({images: [...images, img], isLoading: false})
-                    })
-                })
-            })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [access_token, data.images.meta.href])
-    !isLoading? console.log(images) : console.log('Загрузка...')
-
-    const productHandler = () => {
-        productUpdate({...data, price: data.salePrices[0].value})
-    }
+    // !isLoading? console.log(images) : console.log('Загрузка...')
 
 
     return (
-        <StyledProductItem onClick={productHandler}>
-            <StyledProductImg src={images[0]} onClick={ProductPageSwitcher}/>
-            {/* <NotImage/> */}
+        <StyledProductItem onClick={() => productUpdate(data)}>
+            { images.length? 
+                <StyledProductImg src={images[0]} onClick={ProductPageSwitcher}/>
+                : 
+                <NotImage onClick={ProductPageSwitcher}/>
+            }            
             <StyledNameWrapper>
                 <h3>{data.name}</h3>
                 <h3 className="price">{data.salePrices[0].value}Р</h3>

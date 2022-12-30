@@ -78,7 +78,7 @@ const ProductList = () => {
                         return <StyledProductRow key={ind}>
                             {row.map((data: any, i: number) => {
                                 return <Product
-                                            key={data.name}
+                                            key={data.code}
                                             data={data}
                                             ProductPageSwitcher={ProductPageSwitcher}
                                             addBasketItemHandler={addBasketItemHandler}
