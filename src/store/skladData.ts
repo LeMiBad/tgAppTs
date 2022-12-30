@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Console } from "console";
 import { createStore } from "effector";
 import { createEffect } from 'effector'
 
@@ -109,43 +108,12 @@ export const getProducts = createEffect(async ({acces, category}: {acces: string
             newArr.push(beetweenArr)
             beetweenArr =[]
         }
-        const product = {
-            data: data.data.rows[i],
-        }
 
-        
-
-        const imageLink = data.data.rows[i].images.meta.href.split('/').slice(8).join('/')
-        const imagesUrl = await axios(`https://www.mc.optimiser.website/api/remap/1.2/entity/product/${imageLink}`, config)
-        if(!imagesUrl.data.rows.length) {
-            beetweenArr.push({...product, img: 'https://papik.pro/uploads/posts/2021-09/1631839563_11-papik-pro-p-krasivie-kvadratnie-risunki-12.jpg'})
-            continue
-        }
-
-        
-        var dataPost = JSON.stringify({
-            "img_id": "54a76699-d7be-4866-97bd-d5d26ba5f534"
-        });
-        
-        
-        var cfg = {
-            method: 'post',
-            url: 'https://www.mc.optimiser.website/api/get_image',
-            headers: { 
-                'Authorization': 'Bearer 5f91247657fc61642ba55676b654b9407b09de9b', 
-                'Content-Type': 'application/json'
-            },
-            data : dataPost
-        };
-
-        const img = await axios(cfg)
-        console.log(img.data.img_url)
-
-        beetweenArr.push({...product, img: img.data.img_url})
+        beetweenArr.push(data.data.rows[i])
     }
 
 
-
+    console.log(newArr)
     return newArr
 })
 

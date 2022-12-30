@@ -1,8 +1,7 @@
 import { useStore } from "effector-react"
-import { useEffect } from "react"
 import styled, { keyframes } from "styled-components"
 import ArrowIcon from "../../icons/ArrowIcon"
-import { $basket, addBasketItem } from "../../store/basket"
+import { $basket } from "../../store/basket"
 import { $ProductPage } from "../../store/ProductPage"
 import { $tgInfo } from "../../store/tgData"
 import Basket from "../Basket/Basket"
@@ -65,6 +64,10 @@ const InfoWrapper = styled.div`
     padding: 0 5%;
     width: 112%;
     box-sizing: border-box;
+    p {
+        max-height: 200px;
+        overflow: scroll;
+    }
 `
 
 const NameWrapper = styled.div<{dark: boolean}>`
@@ -104,7 +107,7 @@ const KindItem = styled.div<{dark: boolean}>`
 
 const ProductPage: React.FC<IProps>  = ({exit}) => {
     const {dark} = useStore($tgInfo)
-    const {name, price, desk, img, kinds} = useStore($ProductPage)
+    const {name, price, description, img, kinds} = useStore($ProductPage)
     const basket = useStore($basket)
 
 
@@ -142,9 +145,9 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
                     <h2>{price}Р</h2>
                 </NameWrapper>
                 <h1 style={{fontSize: '24px', color: dark? 'white' : 'black'}}>Описание</h1>
-                <p style={{color: dark? 'white' : 'black'}}>{desk}</p>
+                <p style={{color: dark? 'white' : 'black'}}>{description}</p>
                 <KindsWrapper>
-                    {kinds.map(kind => <KindItem dark={dark} key={kind}>{kind}</KindItem>)}
+                    {/* kinds.length? {kinds.map(kind => <KindItem dark={dark} key={kind}>{kind}</KindItem>)} */}
                 </KindsWrapper>
             </InfoWrapper>
         </Wrapper>

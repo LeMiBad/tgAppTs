@@ -4,7 +4,7 @@ import { createEvent, createStore } from "effector";
 
 
 const initialTgInfo = {
-    dark: false,
+    dark: true,
     desktop: false
 }
 
