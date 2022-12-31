@@ -9,6 +9,7 @@ import Basket from "../Basket/Basket"
 import NotImage from "../Product/NotImage"
 import BigArrow from "../../icons/BigArrow"
 import { useState } from "react"
+import { IProduct } from "../../types/ProductType"
 
 
 interface IProps {
@@ -58,7 +59,7 @@ const ImgWrapper = styled.div`
     gap: 15px;
     img {
         width: 50vw;
-        /* height: 30vh; */
+        height: 50vw;
         border-radius: 30px;
     }
 `
@@ -121,11 +122,12 @@ const ArrowWrapper = styled.div<{dark: boolean}>`
 
 const ProductPage: React.FC<IProps>  = ({exit}) => {
     const {dark} = useStore($tgInfo)
-    const data: any = useStore($ProductPage)
+    const data: IProduct = useStore($ProductPage)
     const basket = useStore($basket)
     const {images, isLoading} = useProductImages(data)
     const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
 
+    console.log(data)
 
     const rightSlide = () => {
         if(imgIndex+1 === images.length) {

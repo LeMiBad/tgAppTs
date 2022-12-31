@@ -1,24 +1,157 @@
 import { createEvent, createStore } from "effector";
+import { IProduct } from "../types/ProductType";
 
-interface IProductPage {
-    name: string
-    description: string
-    price: string
-    img: string
-    kinds: string[]
+
+const initialProduct =  {
+    accountId: '',
+    archived: false,
+    article: '',
+    barcodes: [{
+        ean13: ''
+    }],
+    buyPrice: {
+        value: 1,
+        currency: {
+            meta: {
+                href: '',
+                mediaType: '',
+                metadataHref: '',
+                type: '',
+                uuidHref: ''
+            }
+        }
+    },
+    code: '',
+    country: {
+        meta: {
+            href: '',
+            mediaType: '',
+            metadataHref: '',
+            type: '',
+            uuidHref: ''
+        }
+    },
+    description: '',
+    discountProhibited: false,
+    externalCode: '',
+    files: {
+        meta: {
+            href: '',
+            limit: 1,
+            mediaType: '',
+            offset: 1,
+            size: 1,
+            type: ''
+        } 
+    },
+    group: {
+        meta: {
+            href: '',
+            metadataHref: '',
+            type: '',
+            mediaType: ''
+        }
+    },
+    id: '',
+    images: {
+        meta: {
+            href: '',
+            type: '',
+            mediaType: '',
+            size: 1,
+            limit: 1,
+            offset: 1
+        }
+    },
+    isSerialTrackable: false,
+    meta: {
+        href: '',
+        metadataHref: '',
+        type: '',
+        mediaType: '', 
+        uuidHref: ''
+    },
+    minPrice: {
+        value: 1,
+        currency: {
+            meta: {
+                href: '',
+                mediaType: '', 
+                metadataHref: '',
+                type: '',
+                uuidHref: ''
+            }
+        }
+    },
+    name: '',
+    owner: {
+        meta: {
+            href: '',
+            mediaType: '', 
+            metadataHref: '',
+            type: '',
+            uuidHref: ''
+        }
+    },
+    pathName: '',
+    paymentItemType: '',
+    productFolder: {
+        meta: {
+            href: '',
+            mediaType: '', 
+            metadataHref: '',
+            type: '',
+            uuidHref: ''
+        }
+    },
+    salePrices: [{
+        currency: {
+            meta: {
+                href: '',
+                mediaType: '', 
+                metadataHref: '',
+                type: '',
+                uuidHref: ''
+            },
+        },
+        priceType: {
+            meta: {
+                href: '',
+                type: '',
+                mediaType: 'string'
+            },
+            id: '',
+            name: '',
+            externalCode: ''
+        },
+        value: 1
+    }],
+    shared: false,
+    supplier: {
+        meta: {
+            href: '',
+            mediaType: '', 
+            metadataHref: '',
+            type: '',
+            uuidHref: ''
+        }
+    },
+    trackingType: '',
+    uom: {
+        meta: {
+            href: '',
+            mediaType: '',
+            metadataHref: '',
+            type: ''
+        }
+    },
+    updated: ''
 }
 
-const initialProductPage = {
-    name: 'Шаурма',
-    description: 'Вот тут должно находится описания для данного товара, например его плюсы и минус и многое другое',
-    price: '200',
-    img: 'https://ням.орг/wp-content/uploads/2020/09/SHaurma-1.jpg',
-    kinds: ['С сыром', 'С халапенью', 'С картошкой фри', 'С беконом'],
-}
 
 
-export const productUpdate = createEvent()
-export const $ProductPage = createStore<IProductPage>(initialProductPage)
+export const productUpdate = createEvent<IProduct>()
+export const $ProductPage = createStore<IProduct>(initialProduct)
     .on(productUpdate, (_, product) => {
         return product
     })

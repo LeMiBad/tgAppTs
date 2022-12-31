@@ -13,7 +13,6 @@ const useImages = (product: any) => {
     useEffect(() => {
         getImage(product.images.meta.href, access_token)
             .then(data => {
-                console.log(data)
                 Promise.all(data)
                     .then(data => {
                         const final: string[] = []

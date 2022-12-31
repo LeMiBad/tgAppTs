@@ -98,22 +98,28 @@ export const getProducts = createEffect(async ({acces, category}: {acces: string
     }
     
     const url = `https://www.mc.optimiser.website/api/remap/1.2/entity/product?filter=pathName=${category}`
-    const data = await axios(url, config)
+    
+    if(!category.length) {}
+    else {
+        const data = await axios(url, config)
+        let newArr = []
+        let beetweenArr = []
+        for(let i = 0; i < data.data.rows.length; i++) {
+            const product = data.data.rows[i]
+            beetweenArr.push(product)
 
+            if(beetweenArr.length === 2) {
+                newArr.push(beetweenArr)
+                beetweenArr =[]
+            }
+            else if(beetweenArr.length === 1 && i === data.data.rows.length-1) {
+                newArr.push([product, null])
+            }
 
-    let newArr = []
-    let beetweenArr = []
-    for(let i = 0; i < data.data.rows.length; i++) {
-        if(beetweenArr.length === 2) {
-            newArr.push(beetweenArr)
-            beetweenArr =[]
         }
 
-        beetweenArr.push(data.data.rows[i])
+        return newArr
     }
-
-
-    return newArr
 })
 
 

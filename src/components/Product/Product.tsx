@@ -1,6 +1,7 @@
 // import axios from "axios"
 import styled from "styled-components"
 import useProductImages from "../../hooks/useProductImages"
+import { IProduct } from "../../types/ProductType"
 import {productUpdate} from './../../store/ProductPage'
 import NotImage from "./NotImage"
 
@@ -8,7 +9,7 @@ import NotImage from "./NotImage"
 
 
 interface ProductItemProps {
-    data: any
+    data: IProduct
     ProductPageSwitcher: () => void
     addBasketItemHandler: (e: any, data: any) => void
 }
@@ -26,6 +27,7 @@ const StyledProductItem = styled.div`
 
 const StyledProductImg = styled.img`
     height: 43vw;
+    cursor: pointer;
     background-size: contain !important;
     /* background: url('https://papik.pro/uploads/posts/2021-09/1631839563_11-papik-pro-p-krasivie-kvadratnie-risunki-12.jpg'); */
 `
