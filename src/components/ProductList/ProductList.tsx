@@ -52,11 +52,8 @@ const ProductList = () => {
     const addBasketItemHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, product: any) => {
         addBasketItem(
             {
-                id: product.externalCode,
-                counter: 1,
-                name: product.name,
-                desk: product.description,
-                price: product.salePrices[0].value,
+                data: product,
+                counter: 0
             }
         )
         

@@ -1,25 +1,22 @@
+import { IProduct } from './../types/ProductType';
 import { createEvent, createStore } from "effector";
 
-interface IBasketItem {
-    id: string
+export interface IBasket {
+    data: IProduct
     counter: number
-    name: string
-    desk: string
-    price: string
 }
 
-
-const initialBasket: IBasketItem[] = []
-
+const initialBasket: IBasket[] = []
 
 
-export const addBasketItem = createEvent<IBasketItem>()
+
+export const addBasketItem = createEvent<IBasket>()
 export const deleteBasketItem = createEvent<number>()
 export const $basket = createStore(initialBasket)
     .on(addBasketItem, (state, newBasketItem) => {
         let isHave = false
         for(let i = 0; i < state.length; i++) {
-            if(`${state[i].name}${state[i].price}` === `${newBasketItem.name}${newBasketItem.price}`) {
+            if(`${state[i].data.name}${state[i].data.salePrices[0].value}` === `${newBasketItem.data.name}${newBasketItem.data.salePrices[0].value}`) {
                 isHave = true
             }
         }
@@ -28,8 +25,8 @@ export const $basket = createStore(initialBasket)
 
         if(isHave) {
             newState = state.map(prod => {
-                if(`${prod.name}${prod.price}` === `${newBasketItem.name}${newBasketItem.price}`) {
-                    prod.counter += 1
+                if(`${prod.data.name}${prod.data.salePrices[0].value}` === `${newBasketItem.data.name}${newBasketItem.data.salePrices[0].value}`) {
+                    if(prod.counter) prod.counter += 1
                     return prod
                 }
                 else {

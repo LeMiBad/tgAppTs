@@ -1,11 +1,12 @@
 import { useStore } from "effector-react"
 import { useEffect, useState } from "react"
+import useProductImages from "../../hooks/useProductImages"
 import styled, { keyframes } from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
 import BasketIcon from "../../icons/BasketIcon"
-import BusketDelete from "../../icons/BusketDelete"
 import { $basket, deleteBasketItem } from "../../store/basket"
 import { $tgInfo } from "../../store/tgData"
+import BasketItem from "../BasketItem/BasketItem"
 
 
 const enter = keyframes`
@@ -83,7 +84,8 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
     const [curAnim, setCurAnim] = useState(enter)
     const basket = useStore($basket)
     const {dark} = useStore($tgInfo)
-
+    const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
+    
 
     const switched = () => {
         if(openState) {
@@ -99,11 +101,11 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
         }
     }
 
-    const getSumOfValue = () => {
-        return basket.reduce((acc, item) => {
-            return acc + +item.price * item.counter
-        }, 0)
-    }
+    // const getSumOfValue = () => {
+    //     return basket.reduce((acc, item) => {
+    //         return acc + +item.data.salePrices[0].value * item.counter
+    //     }, 0)
+    // }
 
 
     // useEffect(() => {
@@ -129,19 +131,7 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
                 <h1 style={{color: dark? 'white' : 'black', margin: '0px 10px 20px 0px'}}>Ваша корзина {basket.length? '' : 'пуста'}</h1>
                 <div style={{overflowY: 'scroll', height: '90vh'}}>
                     {basket.map((product, i) => {
-                        return <StyledBasketItem dark={dark} key={product.id}>
-                            <div style={{display: 'flex'}}>
-                                <StyledBasketImg/>
-                                <StyledBasketProps dark={dark}>
-                                    <div>
-                                        <div style={{marginTop: "10px", fontSize: 20, fontWeight: 500, width: '170px', wordWrap: 'break-word'}}>{product.name}</div>
-                                        <h4 style={{fontWeight: 500}}>{product.counter}штук * {product.price}₽</h4>
-                                    </div>
-                                    <h3 style={{marginBottom: "10px"}}>{+product.price * product.counter}₽</h3>
-                                </StyledBasketProps>
-                            </div>
-                            <StyledDeleteButton dark={dark} onClick={() => {deleteBasketItem(i)}}> <BusketDelete></BusketDelete> </StyledDeleteButton>
-                        </StyledBasketItem>
+                        return <BasketItem key={product.data.code} data={product} i={i}/>
                     })}
                 </div>
             </StyledBasketWrapper>

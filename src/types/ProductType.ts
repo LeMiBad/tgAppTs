@@ -1,4 +1,5 @@
 export interface IProduct {
+    counter?: number
     accountId: string
     archived: boolean
     article: string
