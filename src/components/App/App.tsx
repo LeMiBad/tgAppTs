@@ -33,7 +33,7 @@ const App = () => {
     
     const [params] = useSearchParams()
 
-    const initId = params.get('id') || '8'
+    const initId = params.get('id') || '3'
 
     useEffect(() => {
         if(window.Telegram.WebApp.colorScheme === 'dark') darkThemeEnabler()
