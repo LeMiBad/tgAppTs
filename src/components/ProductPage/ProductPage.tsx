@@ -194,7 +194,7 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
                 </KindsWrapper>
             </InfoWrapper>
             <button onClick={() => {
-                window.Telegram.WebApp.MainButton.disable()
+                window.Telegram.WebApp.MainButton.hide()
             }}>Выключить кнопку</button>
         </Wrapper>
     </>

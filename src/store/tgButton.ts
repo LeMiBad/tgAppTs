@@ -29,5 +29,5 @@ export const $tgButton = createStore<ITgButton>(initialTgButton)
     })
     .on(disableTgButton, (_, func) => {
         // window.Telegram.WebApp.offEvent('mainButtonClicked', func)
-        window.Telegram.WebApp.MainButton.hide()
+        window.Telegram.WebApp.MainButton.disable()
     })
