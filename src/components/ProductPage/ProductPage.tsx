@@ -10,6 +10,7 @@ import NotImage from "../Product/NotImage"
 import BigArrow from "../../icons/BigArrow"
 import { useEffect, useState } from "react"
 import { IProduct } from "../../types/ProductType"
+import { disableTgButton } from "../../store/tgButton"
 
 
 interface IProps {
@@ -147,7 +148,7 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
 
     
     useEffect(() => {
-        window.Telegram.WebApp.MainButton.hide()
+        window.Telegram.WebApp.MainButton.disable()
         window.Telegram.WebApp.MainButton.show()
         window.Telegram.WebApp.MainButton.setParams({
             text: `Добавить в корзину +${data.salePrices[0].value}`,
@@ -192,6 +193,9 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
                     {/* kinds.length? {kinds.map(kind => <KindItem dark={dark} key={kind}>{kind}</KindItem>)} */}
                 </KindsWrapper>
             </InfoWrapper>
+            <button onClick={() => {
+                window.Telegram.WebApp.MainButton.disable()
+            }}>Выключить кнопку</button>
         </Wrapper>
     </>
 }
