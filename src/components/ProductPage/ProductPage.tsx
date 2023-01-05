@@ -2,13 +2,13 @@ import { useStore } from "effector-react"
 import styled, { keyframes } from "styled-components"
 import ArrowIcon from "../../icons/ArrowIcon"
 import useProductImages from "../../hooks/useProductImages"
-import { $basket } from "../../store/basket"
+import { $basket, addBasketItem } from "../../store/basket"
 import { $ProductPage } from "../../store/ProductPage"
 import { $tgInfo } from "../../store/tgData"
 import Basket from "../Basket/Basket"
 import NotImage from "../Product/NotImage"
 import BigArrow from "../../icons/BigArrow"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IProduct } from "../../types/ProductType"
 
 
@@ -146,24 +146,21 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
     }
 
     
-    // useEffect(() => {
-    //     window.Telegram.WebApp.MainButton.hide()
-    //     window.Telegram.WebApp.MainButton.show()
-    //     window.Telegram.WebApp.MainButton.setParams({
-    //         text: `Добавить в корзину +${price}`,
-    //         color: dark? '#ffffff' : '#000000',
-    //         text_color: dark? '#000000' : '#ffffff'
-    //     })
-    //     window.Telegram.WebApp.onEvent('mainButtonClicked', () => {
-    //         addBasketItem({
-    //             id: basket.length,
-    //             counter: 1,
-    //             name: name,
-    //             desk: desk,
-    //             price: price,
-    //         })
-    //     })
-    // })
+    useEffect(() => {
+        window.Telegram.WebApp.MainButton.hide()
+        window.Telegram.WebApp.MainButton.show()
+        window.Telegram.WebApp.MainButton.setParams({
+            text: `Добавить в корзину +${data.salePrices[0].value}`,
+            color: dark? '#ffffff' : '#000000',
+            text_color: dark? '#000000' : '#ffffff'
+        })
+        window.Telegram.WebApp.onEvent('mainButtonClicked', () => {
+            addBasketItem({
+                data,
+                counter: 1
+            })
+        })
+    })
 
     return  <>
         <Wrapper anim={enter} dark={dark}>
