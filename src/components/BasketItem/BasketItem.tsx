@@ -11,7 +11,6 @@ const StyledBasketItem = styled.div<{dark: boolean}>`
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    width: 93%;
     max-height: 100%;
     box-shadow: 8px 8px 11px ${props => props.dark? "#ffffff40" : "#00000040"};
     border-radius: 10px;

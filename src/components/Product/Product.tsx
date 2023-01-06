@@ -1,6 +1,7 @@
 // import axios from "axios"
 import styled from "styled-components"
 import useProductImages from "../../hooks/useProductImages"
+import { setCurrentPage } from "../../store/pages"
 import { IProduct } from "../../types/ProductType"
 import {productUpdate} from './../../store/ProductPage'
 import NotImage from "./NotImage"
@@ -10,7 +11,6 @@ import NotImage from "./NotImage"
 
 interface ProductItemProps {
     data: IProduct
-    ProductPageSwitcher: () => void
     addBasketItemHandler: (e: any, data: any) => void
 }
 
@@ -76,8 +76,8 @@ const StyledNameWrapper = styled.div`
 `
 
 
-const Product: React.FC<ProductItemProps> = ({data, ProductPageSwitcher, addBasketItemHandler}) => {
-    const {images, isLoading} = useProductImages(data)    
+const Product: React.FC<ProductItemProps> = ({data, addBasketItemHandler}) => {
+    const {images} = useProductImages(data)    
 
     // !isLoading? console.log(images) : console.log('Загрузка...')
 
@@ -85,9 +85,9 @@ const Product: React.FC<ProductItemProps> = ({data, ProductPageSwitcher, addBask
     return (
         <StyledProductItem onClick={() => productUpdate(data)}>
             { images.length? 
-                <StyledProductImg src={images[0]} onClick={ProductPageSwitcher}/>
+                <StyledProductImg src={images[0]} onClick={() => setCurrentPage(3)}/>
                 : 
-                <NotImage onClick={ProductPageSwitcher}/>
+                <NotImage onClick={() => setCurrentPage(3)}/>
             }            
             <StyledNameWrapper>
                 <h3>{data.name}</h3>

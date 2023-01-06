@@ -6,6 +6,7 @@ import { addBasketItem } from "../../store/basket"
 import { $category } from "../../store/pickedCategory"
 import { $acces, $products, getProducts } from "../../store/skladData"
 import { IProduct } from "../../types/ProductType"
+import Header from "../Header/Header"
 import Loader from "../Loader/Loader"
 import Product from "../Product/Product"
 import ProductPage from "../ProductPage/ProductPage"
@@ -69,6 +70,7 @@ const ProductList = () => {
 
     return (
         <>
+            <Header/>
             {openState? <ProductPage exit={switchHandler}></ProductPage> : <></>}
             <StyledProductList>
                 {!isLoading? <>
@@ -78,7 +80,6 @@ const ProductList = () => {
                                 return data? <Product
                                 key={data.code}
                                 data={data}
-                                ProductPageSwitcher={ProductPageSwitcher}
                                 addBasketItemHandler={addBasketItemHandler}
                             /> : null
                             })}

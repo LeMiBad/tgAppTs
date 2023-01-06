@@ -2,7 +2,7 @@ import { useStore } from "effector-react"
 import styled, { createGlobalStyle } from "styled-components"
 
 import { $tgInfo } from "../../store/tgData"
-import Basket from "../Basket/Basket"
+import BasketIconButton from "../BasketIcon/BasketIcon"
 import CategoryList from "../CategoryList/CategoryList"
 
 
@@ -41,7 +41,7 @@ const Header = () => {
         <StyledHeader dark={dark}>
             <CategoryList/>
             <StyledHeaderSection>
-                <Basket/>
+                <BasketIconButton/>
             </StyledHeaderSection>
         </StyledHeader>
     </>

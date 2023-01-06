@@ -2,10 +2,12 @@ import { useStore } from 'effector-react'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
+import { $pageId, setCurrentPage } from '../../store/pages'
 import { getShopAcces } from '../../store/skladData'
 import { $tgInfo, darkThemeEnabler, desktopEnabler } from '../../store/tgData'
-import Header from '../Header/Header'
+import Basket from '../Basket/Basket'
 import ProductList from '../ProductList/ProductList'
+import ProductPage from '../ProductPage/ProductPage'
 import SalePointPicker from '../SalePointPicker/SalePointPicker'
 import './../../font/Roboto.css'
 
@@ -29,10 +31,10 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
 `
 
 const App = () => {
+    const pages = [<SalePointPicker/>, <ProductList/>, <Basket/>, <ProductPage exit={() => {setCurrentPage(1)}}/>]
     const {dark} = useStore($tgInfo)
-    
     const [params] = useSearchParams()
-
+    const pageId = useStore($pageId)
     const initId = params.get('id') || '3'
 
     useEffect(() => {
@@ -52,9 +54,7 @@ const App = () => {
     return (
         <>
             <GlobalStyle dark={dark}/>
-            <SalePointPicker/>
-            <Header/>
-            <ProductList/>
+            {pages[pageId]}
         </>
     )
 }

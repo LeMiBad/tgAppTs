@@ -1,12 +1,11 @@
 import { useStore } from "effector-react"
 import { useEffect, useState } from "react"
-import useProductImages from "../../hooks/useProductImages"
 import styled, { keyframes } from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
-import BasketIcon from "../../icons/BasketIcon"
-import { $basket, deleteBasketItem } from "../../store/basket"
+import { $basket } from "../../store/basket"
 import { $tgInfo } from "../../store/tgData"
 import BasketItem from "../BasketItem/BasketItem"
+import BasketIconButton from "../BasketIcon/BasketIcon"
 
 
 const enter = keyframes`
@@ -35,56 +34,18 @@ const StyledBasketWrapper = styled.div<{anim: any, dark: boolean}>`
     top: 0%;
     padding: 15px 10px 10px 10px;
     animation: ${props => props.anim} 0.2s linear forwards;
+    box-sizing: border-box;
     background-color: ${props => props.dark? 'black' : 'white'};
 `
 
 
-const StyledBasketItem = styled.div<{dark: boolean}>`
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    width: 93%;
-    max-height: 100%;
-    box-shadow: 8px 8px 11px ${props => props.dark? "#ffffff40" : "#00000040"};
-    border-radius: 10px;
-    margin-bottom: 20px;
-`
-
-const StyledBasketImg = styled.div`
-    min-width: 25vw;
-    height: 25vw;
-    border-radius: 10px;
-    margin-right: 10px  ;
-    background-size: contain !important;
-    background: url('https://papik.pro/uploads/posts/2021-09/1631839563_11-papik-pro-p-krasivie-kvadratnie-risunki-12.jpg');
-`
-
-const StyledBasketProps = styled.div<{dark: boolean}>`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    color: ${props => props.dark? 'white' : 'black'};
-`
-
-const StyledDeleteButton = styled.button<{dark: boolean}>`
-    width: 20%;
-    border: 0;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    background-color: ${props => props.dark? 'white' : 'black'};
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-`
 
 const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => {
     const {openState, switchHandler} = useOpen()
     const [curAnim, setCurAnim] = useState(enter)
     const basket = useStore($basket)
     const {dark} = useStore($tgInfo)
-    const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
+    // const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
     
 
     const switched = () => {
@@ -126,23 +87,19 @@ const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => 
     })
 
 
-    return <>
-        {(openState)? <>
-            <StyledBasketWrapper dark={dark} anim={curAnim}>
-                <h1 style={{color: dark? 'white' : 'black', margin: '0px 10px 20px 0px'}}>Ваша корзина {basket.length? '' : 'пуста'}</h1>
-                <div style={{overflowY: 'scroll', height: '90vh'}}>
-                    {basket.map((product, i) => {
-                        return <BasketItem key={product.data.code} data={product} i={i}/>
-                    })}
-                </div>
-            </StyledBasketWrapper>
-        </>
-        :
-        <></>}
-        <div style={{cursor: 'pointer', position: 'relative'}} onClick={switched}>
-            <BasketIcon value={basket.reduce((acc, prod) => acc + prod.counter, 0)}></BasketIcon>
-        </div>
-    </>
+    return (
+        <StyledBasketWrapper dark={dark} anim={curAnim}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: 'center', paddingRight: 15}}>
+                <h1 style={{color: dark? 'white' : 'black'}}>Ваша корзина {basket.length? '' : 'пуста'}</h1>
+                <BasketIconButton/>
+            </div>
+            <div style={{overflowY: 'scroll', height: '90vh', paddingTop: 10}}>
+                {basket.map((product, i) => {
+                    return <BasketItem key={product.data.code} data={product} i={i}/>
+                })}
+            </div>
+        </StyledBasketWrapper>
+    )
 }
 
 export default Basket

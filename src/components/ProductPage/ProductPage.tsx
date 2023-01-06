@@ -2,15 +2,14 @@ import { useStore } from "effector-react"
 import styled, { keyframes } from "styled-components"
 import ArrowIcon from "../../icons/ArrowIcon"
 import useProductImages from "../../hooks/useProductImages"
-import { $basket, addBasketItem } from "../../store/basket"
+import { addBasketItem } from "../../store/basket"
 import { $ProductPage } from "../../store/ProductPage"
 import { $tgInfo } from "../../store/tgData"
-import Basket from "../Basket/Basket"
 import NotImage from "../Product/NotImage"
 import BigArrow from "../../icons/BigArrow"
 import { useEffect, useState } from "react"
 import { IProduct } from "../../types/ProductType"
-import { disableTgButton } from "../../store/tgButton"
+import BasketIconButton from "../BasketIcon/BasketIcon"
 
 
 interface IProps {
@@ -99,18 +98,6 @@ const KindsWrapper = styled.div`
     margin: 30px 0;
 `
 
-const KindItem = styled.div<{dark: boolean}>`
-    height: 10vh;
-    background-color: ${props => props.dark? 'white' : 'black'};
-    color: ${props => props.dark? 'black' : 'white'};
-    padding: 20px 25px;
-    border-radius: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    white-space: nowrap;
-`
-
 const ArrowWrapper = styled.div<{dark: boolean}>`
     min-width: 50px;
     min-height: 50px;
@@ -124,9 +111,8 @@ const ArrowWrapper = styled.div<{dark: boolean}>`
 const ProductPage: React.FC<IProps>  = ({exit}) => {
     const {dark} = useStore($tgInfo)
     const data: IProduct = useStore($ProductPage)
-    const basket = useStore($basket)
     const {images, isLoading} = useProductImages(data)
-    const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
+    const [{imgIndex}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
 
     console.log(data)
 
@@ -148,7 +134,7 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
 
     
     useEffect(() => {
-        window.Telegram.WebApp.MainButton.disable()
+        window.Telegram.WebApp.MainButton.hide()
         window.Telegram.WebApp.MainButton.show()
         window.Telegram.WebApp.MainButton.setParams({
             text: `Добавить в корзину +${data.salePrices[0].value}`,
@@ -167,7 +153,7 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
         <Wrapper anim={enter} dark={dark}>
             <Navbar style={{display: 'flex', justifyContent: 'space-between'}}>
                 <ArrowIcon func={exit}/>
-                <Basket exitProductPage={exit}/>
+                <BasketIconButton/>
             </Navbar>
             <ImgWrapper>
                 {imgIndex? <ArrowWrapper onClick={leftSlide} dark={dark}>
@@ -193,9 +179,6 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
                     {/* kinds.length? {kinds.map(kind => <KindItem dark={dark} key={kind}>{kind}</KindItem>)} */}
                 </KindsWrapper>
             </InfoWrapper>
-            <button onClick={() => {
-                window.Telegram.WebApp.MainButton.hide()
-            }}>Выключить кнопку</button>
         </Wrapper>
     </>
 }

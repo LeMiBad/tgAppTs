@@ -2,6 +2,7 @@ import { useStore } from "effector-react"
 import { useEffect } from "react"
 import styled from "styled-components"
 import useOpen from "../../hooks/useOpeningSwitcher"
+import { setCurrentPage } from "../../store/pages"
 import { $acces, $salePoints, getCategories, getSalePoints } from "../../store/skladData"
 import { $tgInfo } from "../../store/tgData"
 import Loader from "../Loader/Loader"
@@ -12,7 +13,6 @@ const StyledSalePointPicker = styled.div<{dark: boolean}>`
     height: 100vh;
     left: 0;
     top: 0;
-    z-index: 30;
     background-color: ${props => props.dark? 'black' : 'white'};
     position: fixed;
     padding: 10%;
@@ -53,13 +53,12 @@ const StyledCrossContainer = styled.div<{dark: boolean}>`
 
 const SalePointPicker = () => {
     const {dark} = useStore($tgInfo)
-    const {openState, switchHandler} = useOpen()
     const {account_id} = useStore($acces)
     const salePoints = useStore($salePoints)
 
 
     const pickSaleDot = (reg: string) => {
-        switchHandler()
+        setCurrentPage(1)
     }
 
     
@@ -73,9 +72,7 @@ const SalePointPicker = () => {
     
 
     return <>
-        {openState? <></> 
-        : 
-        salePoints.length? 
+        {salePoints.length? 
         <>
             <StyledSalePointPicker dark={dark}>
                 <h1 style={{color: dark? 'white' : 'black', textAlign: 'center', fontSize: '26px'}}>Выберите точку продаж</h1>
