@@ -34,10 +34,7 @@ const ProductList = () => {
     const {folder_name} = useStore($category)
     const [isLoading, setIsLoaing] = useState(true)
     let products = useStore($products)
-    
-    const ProductPageSwitcher = () => {
-        switchHandler()
-    }
+
 
     useEffect(() => {
         getProducts.pending.watch(pending => {

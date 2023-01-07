@@ -2,14 +2,15 @@ import { useStore } from "effector-react"
 import styled, { keyframes } from "styled-components"
 import ArrowIcon from "../../icons/ArrowIcon"
 import useProductImages from "../../hooks/useProductImages"
-import { addBasketItem } from "../../store/basket"
 import { $ProductPage } from "../../store/ProductPage"
 import { $tgInfo } from "../../store/tgData"
 import NotImage from "../Product/NotImage"
 import BigArrow from "../../icons/BigArrow"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { IProduct } from "../../types/ProductType"
-import BasketIconButton from "../BasketIcon/BasketIcon"
+import BasketIconButton from "../BasketIconButton/BasketIconButton"
+import LoadImage from "../LoadImage/LoadImage"
+import NotAImage from "../Product/NotImage"
 
 
 interface IProps {
@@ -114,7 +115,6 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
     const {images, isLoading} = useProductImages(data)
     const [{imgIndex}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
 
-    console.log(data)
 
     const rightSlide = () => {
         if(imgIndex+1 === images.length) {
@@ -132,23 +132,6 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
         }
     }
 
-    
-    useEffect(() => {
-        window.Telegram.WebApp.MainButton.hide()
-        window.Telegram.WebApp.MainButton.show()
-        window.Telegram.WebApp.MainButton.setParams({
-            text: `Добавить в корзину +${data.salePrices[0].value}`,
-            color: dark? '#ffffff' : '#000000',
-            text_color: dark? '#000000' : '#ffffff'
-        })
-        window.Telegram.WebApp.onEvent('mainButtonClicked', () => {
-            addBasketItem({
-                data,
-                counter: 1
-            })
-        })
-    })
-
     return  <>
         <Wrapper anim={enter} dark={dark}>
             <Navbar style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -160,9 +143,10 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
                     <BigArrow left/>
                 </ArrowWrapper> : <div style={{width: 50, height: 50}}></div>}
                 { isLoading? 
-                <div style={{width: '50vw'}}><NotImage/></div> 
+                    <LoadImage/>
                 : 
-                <img src={images[imgIndex]} alt="" />}
+                    images[imgIndex]? <img src={images[imgIndex]} alt="" /> : <NotAImage></NotAImage>
+                }
                 {imgIndex < images.length-1? <ArrowWrapper onClick={rightSlide} dark={dark}>
                         <BigArrow/>
                     </ArrowWrapper> : <div style={{width: 50, height: 50}}></div>

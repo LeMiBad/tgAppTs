@@ -2,13 +2,10 @@ import { useStore } from 'effector-react'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
-import { $pageId, setCurrentPage } from '../../store/pages'
+import useMainButton from '../../hooks/useMainButton'
+import usePage from '../../hooks/usePage'
 import { getShopAcces } from '../../store/skladData'
 import { $tgInfo, darkThemeEnabler, desktopEnabler } from '../../store/tgData'
-import Basket from '../Basket/Basket'
-import ProductList from '../ProductList/ProductList'
-import ProductPage from '../ProductPage/ProductPage'
-import SalePointPicker from '../SalePointPicker/SalePointPicker'
 import './../../font/Roboto.css'
 
 declare global {
@@ -23,7 +20,7 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
     * {
         margin: 0;
         padding: 0;
-        font-family: 'Roboto';
+        font-family: 'Montserrat';
         body {
             background-color: ${props => props.dark? 'black' : "white"};
         }
@@ -31,11 +28,11 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
 `
 
 const App = () => {
-    const pages = [<SalePointPicker/>, <ProductList/>, <Basket/>, <ProductPage exit={() => {setCurrentPage(1)}}/>]
     const {dark} = useStore($tgInfo)
     const [params] = useSearchParams()
-    const pageId = useStore($pageId)
-    const initId = params.get('id') || '3'
+    const mainButton = useMainButton()
+    const currentPage = usePage()
+    const initId = params.get('id') || '8'
 
     useEffect(() => {
         if(window.Telegram.WebApp.colorScheme === 'dark') darkThemeEnabler()
@@ -54,7 +51,8 @@ const App = () => {
     return (
         <>
             <GlobalStyle dark={dark}/>
-            {pages[pageId]}
+            {mainButton}
+            {currentPage}
         </>
     )
 }
