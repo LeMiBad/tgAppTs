@@ -1,4 +1,4 @@
-import { createEvent, createStore } from "effector";
+import { createEffect, createStore } from "effector";
 import { IProduct } from "../types/ProductType";
 
 
@@ -150,8 +150,19 @@ const initialProduct =  {
 
 
 
-export const productUpdate = createEvent<IProduct>()
-export const $ProductPage = createStore<IProduct>(initialProduct)
-    .on(productUpdate, (_, product) => {
-        return product
-    })
+export const productUpdate = createEffect(async ({acces, product}: {acces: string, product: IProduct}) => {
+    const config = {
+        headers: {
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            "Accept": "*/*",
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Credentials': "true",
+            "Authorization": `Bearer ${acces}`
+        },
+    }
+
+    
+    return [product]
+})
+export const $ProductPage = createStore<IProduct[]>([initialProduct])
+    .on(productUpdate.done, (state, { params, result }) => result)

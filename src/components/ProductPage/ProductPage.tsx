@@ -1,10 +1,9 @@
 import { useStore } from "effector-react"
 import styled, { keyframes } from "styled-components"
 import ArrowIcon from "../../icons/ArrowIcon"
-import useProductImages from "../../hooks/useProductImages"
+import useProductImages from "../../hooks/useImages"
 import { $ProductPage } from "../../store/ProductPage"
 import { $tgInfo } from "../../store/tgData"
-import NotImage from "../Product/NotImage"
 import BigArrow from "../../icons/BigArrow"
 import { useState } from "react"
 import { IProduct } from "../../types/ProductType"
@@ -111,9 +110,11 @@ const ArrowWrapper = styled.div<{dark: boolean}>`
 
 const ProductPage: React.FC<IProps>  = ({exit}) => {
     const {dark} = useStore($tgInfo)
-    const data: IProduct = useStore($ProductPage)
-    const {images, isLoading} = useProductImages(data)
+    const data: IProduct[] = useStore($ProductPage)
+    const {images, isLoading} = useProductImages(data[0])
     const [{imgIndex}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
+
+
 
 
     const rightSlide = () => {
@@ -154,11 +155,11 @@ const ProductPage: React.FC<IProps>  = ({exit}) => {
             </ImgWrapper>
             <InfoWrapper>
                 <NameWrapper dark={dark}>
-                    <h1>{data.name}</h1>
-                    <h2>{data.salePrices[0].value}Р</h2>
+                    <h1>{data[0].name}</h1>
+                    <h2>{data[0].salePrices[0].value}Р</h2>
                 </NameWrapper>
                 <h1 style={{fontSize: '24px', color: dark? 'white' : 'black'}}>Описание</h1>
-                <p style={{color: dark? 'white' : 'black'}}>{data.description}</p>
+                <p style={{color: dark? 'white' : 'black'}}>{data[0].description}</p>
                 <KindsWrapper>
                     {/* kinds.length? {kinds.map(kind => <KindItem dark={dark} key={kind}>{kind}</KindItem>)} */}
                 </KindsWrapper>

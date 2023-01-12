@@ -18,6 +18,7 @@ const StyledProductList = styled.div`
     width: 90%;
     margin: 55px auto 0 auto;
     flex-direction: column;
+    padding-bottom: 10vh;
     gap: 10px;
 `
 

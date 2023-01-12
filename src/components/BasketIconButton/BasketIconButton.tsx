@@ -1,7 +1,8 @@
 import { useStore } from "effector-react"
+import usePage from "../../hooks/usePage"
 import BasketIcon from "../../icons/BasketIcon"
 import { $basket } from "../../store/basket"
-import { $pageId, setCurrentPage } from "../../store/pages"
+import { $pageId } from "../../store/pages"
 
 
 
@@ -9,10 +10,11 @@ import { $pageId, setCurrentPage } from "../../store/pages"
 const BasketIconButton = () => {
     const basket = useStore($basket)
     const pageId = useStore($pageId)
+    const {toProductList, toBasket} = usePage()
 
     const handler = () => {
-        if(pageId === 2) setCurrentPage(1)
-        else setCurrentPage(2)
+        if(pageId === 2) toProductList()
+        else toBasket()
     }
 
     return (

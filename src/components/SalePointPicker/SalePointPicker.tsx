@@ -1,8 +1,7 @@
 import { useStore } from "effector-react"
 import { useEffect } from "react"
 import styled from "styled-components"
-import useOpen from "../../hooks/useOpeningSwitcher"
-import { setCurrentPage } from "../../store/pages"
+import usePage from "../../hooks/usePage"
 import { $acces, $salePoints, getCategories, getSalePoints } from "../../store/skladData"
 import { $tgInfo } from "../../store/tgData"
 import Loader from "../Loader/Loader"
@@ -55,10 +54,11 @@ const SalePointPicker = () => {
     const {dark} = useStore($tgInfo)
     const {account_id} = useStore($acces)
     const salePoints = useStore($salePoints)
+    const {toProductList} = usePage()
 
 
     const pickSaleDot = (reg: string) => {
-        setCurrentPage(1)
+        toProductList()
     }
 
     

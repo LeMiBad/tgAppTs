@@ -1,8 +1,11 @@
 // import axios from "axios"
+import { useStore } from "effector-react"
 import styled from "styled-components"
-import useProductImages from "../../hooks/useProductImages"
-import { setCurrentPage } from "../../store/pages"
+import usePage from "../../hooks/usePage"
+import useProductImages from "../../hooks/useImages"
+import { $acces } from "../../store/skladData"
 import { IProduct } from "../../types/ProductType"
+import LoadImage from "../LoadImage/LoadImage"
 import {productUpdate} from './../../store/ProductPage'
 import NotImage from "./NotImage"
 
@@ -77,17 +80,20 @@ const StyledNameWrapper = styled.div`
 
 
 const Product: React.FC<ProductItemProps> = ({data, addBasketItemHandler}) => {
-    const {images} = useProductImages(data)    
-
-    // !isLoading? console.log(images) : console.log('Загрузка...')
+    const {images, isLoading} = useProductImages(data)
+    const {toProductPage} = usePage() 
+    const {access_token} = useStore($acces)
 
 
     return (
-        <StyledProductItem onClick={() => productUpdate(data)}>
-            { images.length? 
-                <StyledProductImg src={images[0]} onClick={() => setCurrentPage(3)}/>
+        <StyledProductItem onClick={() => productUpdate({acces: access_token, product: data})}>
+            {
+                isLoading? <div onClick={toProductPage} style={{width: '43vw', height: '43vw', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><LoadImage/></div>
                 : 
-                <NotImage onClick={() => setCurrentPage(3)}/>
+                images.length? 
+                <StyledProductImg src={images[0]} onClick={toProductPage}/>
+                : 
+                <NotImage onClick={toProductPage}/>
             }            
             <StyledNameWrapper>
                 <h3>{data.name}</h3>

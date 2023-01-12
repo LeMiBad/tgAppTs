@@ -5,7 +5,7 @@ import { $tgInfo } from "../../store/tgData"
 import BasketItem from "../BasketItem/BasketItem"
 import BasketIconButton from "../BasketIconButton/BasketIconButton"
 import ArrowIcon from "../../icons/ArrowIcon"
-import { setCurrentPage } from "../../store/pages"
+import usePage from "../../hooks/usePage"
 
 
 const enter = keyframes`
@@ -34,20 +34,18 @@ const StyledBasketWrapper = styled.div<{anim: any, dark: boolean}>`
 const Basket: React.FC<{exitProductPage?: () => void}> = ({exitProductPage}) => {
     const basket = useStore($basket)
     const {dark} = useStore($tgInfo)
-    // const [{imgIndex, slideState}, setCurImg] = useState<{imgIndex: number, slideState: string}>({imgIndex: 0, slideState: 'left'})
-
+    const {toProductList} = usePage()
 
     return (
             <StyledBasketWrapper dark={dark} anim={enter}>
-                <div style={{display: "flex", justifyContent: "space-between", alignItems: 'center', paddingRight: 15}}>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: 'center', padding: '0 15px 10px 0'}}>
                     <div style={{display: 'flex', alignItems: 'center', gap: 10}}>
-                        {/* <div style={{width: 50, height: 50, backgroundColor: 'red'}}></div> */}
-                        <ArrowIcon func={() => setCurrentPage(1)}/>
+                        <ArrowIcon func={toProductList}/>
                         <h1 style={{color: dark? 'white' : 'black', fontSize: 20}}>Ваша корзина {basket.length? '' : 'пуста'}</h1>
                     </div>
                     <BasketIconButton/>
                 </div>
-                <div style={{overflowY: 'scroll', height: '90vh', paddingTop: 10}}>
+                <div style={{overflowY: 'scroll', height: '85vh', paddingTop: 10}}>
                     {basket.map((product, i) => {
                         return <BasketItem key={product.data.code} data={product} i={i}/>
                     })}

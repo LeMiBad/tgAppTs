@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle<{dark: boolean}>`
     * {
         margin: 0;
         padding: 0;
-        font-family: 'Montserrat';
+        font-family: 'Montserrat', 'Roboto', sans-serif;
         body {
             background-color: ${props => props.dark? 'black' : "white"};
         }
@@ -31,8 +31,8 @@ const App = () => {
     const {dark} = useStore($tgInfo)
     const [params] = useSearchParams()
     const mainButton = useMainButton()
-    const currentPage = usePage()
-    const initId = params.get('id') || '8'
+    const {currentPage} = usePage()
+    const initId = params.get('id') || '3'
 
     useEffect(() => {
         if(window.Telegram.WebApp.colorScheme === 'dark') darkThemeEnabler()
@@ -48,13 +48,11 @@ const App = () => {
     }, [initId])
     
 
-    return (
-        <>
-            <GlobalStyle dark={dark}/>
-            {mainButton}
-            {currentPage}
-        </>
-    )
+    return <>
+        <GlobalStyle dark={dark}/>
+        {mainButton}
+        {currentPage}
+    </>
 }
 
 export default App

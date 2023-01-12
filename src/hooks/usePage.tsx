@@ -13,9 +13,14 @@ const usePage = () => {
     const pageId = useStore($pageId)
 
 
+    const navigator = {
+        toSalesPoiints: () => setCurrentPage(0),
+        toProductList: () => setCurrentPage(1),
+        toBasket: () => setCurrentPage(2),
+        toProductPage: () => setCurrentPage(3),
+    }
 
-
-    return pages[pageId]
+    return {currentPage: pages[pageId], ...navigator}
 }
 
 export default usePage

@@ -1,15 +1,16 @@
 import { useStore } from "effector-react"
 import { useEffect, useState } from "react"
 import { $acces } from "../store/skladData"
+import { IProduct } from "../types/ProductType"
 import { getImage } from "../utils/getImage"
 
 
 
-const useImages = (product: any) => {
+const useImages = (product: IProduct) => {
     const {access_token} = useStore($acces)
     const [{images, isLoading}, setImages] = useState<{images: string[], isLoading: boolean}>({images: [], isLoading: true})
 
-
+    
     useEffect(() => {
         getImage(product.images.meta.href, access_token)
             .then(data => {
